@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="jumbotron">
+        <h1>Matriculas UTA</h1>
+    </div>
+
+    <div *ngIf="annio_selected!=null && sede_selected!=null">
+
+        <button (click)="shuffle()">
+            Cambiar Valores
+        </button>
+        <br>
+        
+        <label>AÑO</label>
+        <select [(ngModel)]="annio_selected" (change)="changeAnnio()">
+            <option *ngFor="let res of resumen_matriculados; let i=index" [ngValue]="i">{{ res.ANNIO }}</option>
+        </select>
+        <!--
+        <label>SEDE</label>
+        <select [(ngModel)]="sede_selected" (change)="changeSede()">
+            <option *ngFor="let sede of resumen_matriculados[annioSelected].SEDES; let j=index" [ngValue]="j">{{ sede.SEDE }}</option>
+        </select>-->
+    </div>
+
+    <div>
+        <nav>
+            <div>
+                <a [routerLink]="['/resumen']">Resumen</a>
+            </div>
+            <div>
+                <a [routerLink]="['/nuevos']">Nuevos</a>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<h3>Resumen</h3>
+
+{{resumen_matriculados | json}}
+
+<p>annio_selected: {{ annio_selected | json }}</p>
+<p>sede_selected: {{ sede_selected | json }}</p>
+
+<!--
+<div *ngIf="resumen_matriculados[annioSelected].SEDES[sedeSelected] as resumen">
+    REGULAR: {{resumen.REGULAR }} INGRESO ESPECIAL: {{resumen.INGRESO_ESPECIAL }} OTROS INGRESOS: {{resumen.OTROS_INGRESOS }}
+    ANTIGUOS: {{resumen.ANTIGUOS }}
+</div>-->
