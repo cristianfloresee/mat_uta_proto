@@ -15,10 +15,12 @@ import { TransitionGroupComponent, TransitionGroupItemDirective } from './transi
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResumenMatriculasComponent } from './components/resumen-matriculas/resumen-matriculas.component';
-import { AlumnosNuevosComponent } from './components/alumnos-nuevos/alumnos-nuevos.component';
 import { ResumenService } from './services/resumen.service';
-
-
+import { ModalModule } from './modal/modal.module';
+import { MatriculaNuevosComponent } from './components/matricula-nuevos/matricula-nuevos.component';
+import { MatriculaAntiguosComponent } from './components/matricula-antiguos/matricula-antiguos.component';
+import { MatriculaTotalComponent } from './components/matricula-total/matricula-total.component';
+import { FormateadorService } from './services/formateador.service';
 
 @NgModule({
   declarations: [
@@ -27,9 +29,12 @@ import { ResumenService } from './services/resumen.service';
     TransitionGroupComponent,
     TransitionGroupItemDirective,
     ResumenMatriculasComponent,
-    AlumnosNuevosComponent
+    MatriculaNuevosComponent,
+    MatriculaAntiguosComponent,
+    MatriculaTotalComponent
   ],
   imports: [
+    ModalModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
@@ -37,7 +42,11 @@ import { ResumenService } from './services/resumen.service';
     AppRoutingModule,
     ChartsModule
   ],
-  providers: [SocketService, ResumenService],
+  providers: [
+    SocketService, 
+    ResumenService,
+    FormateadorService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -19,17 +19,6 @@ export class SocketService {
         this.socket = io(SERVER_URL);
     }
 
-    /*
-    public getCities(): Promise<Array<City>> {
-        return this.client
-            .get<City[]>(`${SERVER_URL}/api/matriculas`)
-            .toPromise()
-            .then((response) => {
-                return response as City[];
-            })
-            .catch(this.handleError);
-    }*/
-
     public getMatriculas(): Promise<any> {
         return this.client
             //.get<City[]>(`${SERVER_URL}/api/matriculas`)

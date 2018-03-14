@@ -1,4 +1,4 @@
-<div class="container">
+<!--<div class="container">
     <div class="jumbotron">
         <h1>Matriculas UTA</h1>
     </div>
@@ -9,27 +9,22 @@
             Cambiar Valores
         </button>
         <br>
-        
-        <label>AÑO</label>
-        <select [(ngModel)]="annio_selected" (change)="changeAnnio()">
-            <option *ngFor="let res of resumen_matriculados; let i=index" [ngValue]="i">{{ res.ANNIO }}</option>
-        </select>
-        <!--
-        <label>SEDE</label>
-        <select [(ngModel)]="sede_selected" (change)="changeSede()">
-            <option *ngFor="let sede of resumen_matriculados[annioSelected].SEDES; let j=index" [ngValue]="j">{{ sede.SEDE }}</option>
-        </select>-->
-    </div>
 
-    <div>
-        <nav>
-            <div>
-                <a [routerLink]="['/resumen']">Resumen</a>
-            </div>
-            <div>
-                <a [routerLink]="['/nuevos']">Nuevos</a>
-            </div>
-        </nav>
+        <label>AÑO</label>
+        <select [(ngModel)]="annio_selected">
+            <option *ngFor="let res of resumen_matriculas; let i=index" [ngValue]="i">{{ res.ANNIO }}</option>
+        </select>
+
+
+        <label>SEDE</label>
+        <select [(ngModel)]="sede_selected">
+            <option *ngFor="let sede of resumen_matriculas[annio_selected].SEDES; let j=index" [ngValue]="j">{{ sede.SEDE }}</option>
+        </select>
+
+        <label>TIPO CARRERA</label>
+        <select [(ngModel)]="tipo_carrera_selected">
+            <option *ngFor="let tipo_carrera of resumen_matriculas[annio_selected].SEDES[sede_selected].TIPOS_CARRERA; let k=index" [ngValue]="k">{{ tipo_carrera.TIPO_CARRERA }}</option>
+        </select>
     </div>
 </div>
 
@@ -37,11 +32,58 @@
 
 {{resumen_matriculados | json}}
 
-<p>annio_selected: {{ annio_selected | json }}</p>
-<p>sede_selected: {{ sede_selected | json }}</p>
+<p>annio_selected: {{ annio_selected }}</p>
+<p>sede_selected: {{ sede_selected}}</p>
+<p>tipo_carrera_selected: {{ tipo_carrera_selected }}</p>
 
-<!--
-<div *ngIf="resumen_matriculados[annioSelected].SEDES[sedeSelected] as resumen">
+<div *ngIf="resumen_matriculas[annio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected] as resumen">
     REGULAR: {{resumen.REGULAR }} INGRESO ESPECIAL: {{resumen.INGRESO_ESPECIAL }} OTROS INGRESOS: {{resumen.OTROS_INGRESOS }}
     ANTIGUOS: {{resumen.ANTIGUOS }}
-</div>-->
+</div>
+-->
+
+<div id="content" style="height: 600px; background-color: yellow">
+    <div class="reader">
+
+        <div id="actions">
+            <button class="big" (click)="openNuevos()">Matricula Nuevos</button>
+            <button class="big" (click)="openAntiguos()">Matricula Antiguos</button>
+            <button class="big" (click)="openTotal()">Matricula Total</button>
+
+            <modal #nuevosModal>
+                <ng-template #modalHeader>
+                    <div style="width: 100%; background-color: green">
+                        <h2>Alumnos Nuevos</h2>
+                    </div>
+                </ng-template>
+                <ng-template #modalBody>
+                    <app-matricula-nuevos [nuevos]="resumen_nuevos"></app-matricula-nuevos>
+                </ng-template>
+            </modal>
+
+            
+            <modal #antiguosModal>
+                <ng-template #modalHeader>
+                    <div style="width: 100%; background-color: green">
+                        <h2>Alumnos Antiguos</h2>
+                    </div>
+                </ng-template>
+                <ng-template #modalBody>
+                    <app-matricula-antiguos [antiguos]="resumen_antiguos"></app-matricula-antiguos>
+                </ng-template>
+            </modal>
+
+            <modal #totalModal>
+                <ng-template #modalHeader>
+                    <div style="width: 100%; background-color: green">
+                        <h2>Alumnos Total</h2>
+                    </div>
+                </ng-template>
+                <ng-template #modalBody>
+                    <app-matricula-total [total]="resumen_total"></app-matricula-total>
+                </ng-template>
+            </modal>
+
+        </div>
+    </div>
+</div>
