@@ -21,7 +21,6 @@ export class SocketService {
 
     public getMatriculas(): Promise<any> {
         return this.client
-            //.get<City[]>(`${SERVER_URL}/api/matriculas`)
             .get<any>(`${SERVER_URL}/api/matriculas`)
             .toPromise()
             .then((response) => {
@@ -33,7 +32,7 @@ export class SocketService {
 
     public onChange(): Observable<any> {
         return new Observable<any>(observer => {
-            this.socket.on('change', (data) => observer.next(data));
+            this.socket.on('change_matriculas', (data) => observer.next(data));
         });
     }
 

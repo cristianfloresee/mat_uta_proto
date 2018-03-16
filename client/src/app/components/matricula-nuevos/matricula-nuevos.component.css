@@ -1,0 +1,26 @@
+table ,tr td,
+table ,tr th {
+    border:1px solid red
+}
+
+tbody {
+    display:block;
+    height:200px;
+    overflow-y: scroll
+  
+}
+thead, tfoot,tbody tr {
+   display:table;  
+   width:100%; 
+   table-layout:fixed;  
+}
+        
+table {
+    width:100%;
+}
+thead , tfoot {
+  width: calc( 100% - 1em );
+  background-color: #333;
+  color: #fff;
+  padding-right: 1em;
+}

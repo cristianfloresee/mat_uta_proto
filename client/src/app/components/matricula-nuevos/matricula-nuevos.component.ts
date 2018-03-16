@@ -10,6 +10,7 @@ export class MatriculaNuevosComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+     console.log(this.nuevos);
   }
 
 }

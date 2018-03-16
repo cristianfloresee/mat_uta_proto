@@ -7,18 +7,30 @@ var socket = require('../../index');
 var object_format = { outFormat: oracledb.OBJECT };
 
 async function getMatriculas(req, res) {
-	
 	try {
 		let conn = await pool.getPool().getConnection()
+		let matriculados, nuevos_matriculados;
 
-		let matriculados = conn.execute(
-			'SELECT * FROM V_RESUMEN_MATRICULADOS', {}, object_format
-		)
+		if (req.url != '/orcl12c') {
+			console.log("consulta API...");
+			matriculados = conn.execute(
+				'SELECT * FROM V_RESUMEN_MATRICULADOS_FINAL', {}, object_format
+			)
 
-		let nuevos_matriculados = conn.execute(
-			'SELECT * FROM V_RESUMEN_MATRICULADOS_NUEVOS order by anio DESC, facultad, cc', {}, object_format
-			//'SELECT * FROM V_RESUMEN_MATRICULADOS_NUEVOS order by facultad, car_cod_carrera', {}, object_format
-		)
+			nuevos_matriculados = conn.execute(
+				'SELECT * FROM V_RESUMEN_MATRICULADOS_NUEVOS_FINAL', {}, object_format
+			)
+		}
+		else {
+			console.log("consulta ORACLE...")
+			matriculados = conn.execute(
+				'SELECT * FROM V_RESUMEN_MATRICULADOS_FINAL WHERE ANIO = 2017', {}, object_format
+			)
+
+			nuevos_matriculados = conn.execute(
+				'SELECT * FROM V_RESUMEN_MATRICULADOS_NUEVOS_FINAL WHERE ANIO = 2017', {}, object_format
+			)
+		}
 
 		let results = [await matriculados, await nuevos_matriculados]
 		results[0] = results[0].rows;
@@ -26,16 +38,14 @@ async function getMatriculas(req, res) {
 
 		let release = await conn.release()
 
-		//API
-		if (req.url != '/orcl12c') {
-			res.send(results) //RESPUESTA AL CLIENTE
-		}
-		//CQN ORACLE
-		else {
+		//ORACLE NOTIFICATION
+		if (req.url == '/orcl12c') {
+			console.log("Oracle Notificaction...");
 			let io = socket.getSocket()
 			io.emit('change_matriculas', results) //RESPUESTA AL CLIENTE POR SOCKET
-			res.send(results) //RESPUESTA A LA DB
 		}
+
+		res.send(results) //RESPUESTA AL CLIENTE O DB
 	}
 	catch (err) {
 		console.log(err)

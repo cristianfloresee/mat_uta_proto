@@ -5,364 +5,161 @@ import { SocketService } from '../../services/socket.service';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 import { FormateadorService } from '../../services/formateador.service';
 
-
-//import { Chart } from 'chart.js';
-
 @Component({
-  selector: 'app-resumen-matriculas',
-  templateUrl: './resumen-matriculas.component.html',
-  styleUrls: ['./resumen-matriculas.component.css'],
-  encapsulation: ViewEncapsulation.None,
+   selector: 'app-resumen-matriculas',
+   templateUrl: './resumen-matriculas.component.html',
+   styleUrls: ['./resumen-matriculas.component.css'],
+   encapsulation: ViewEncapsulation.None,
 })
 export class ResumenMatriculasComponent implements OnInit {
-  @ViewChild('nuevosModal') nuevosModal: ModalComponent;
-  @ViewChild('antiguosModal') antiguosModal: ModalComponent;
-  @ViewChild('totalModal') totalModal: ModalComponent;
+   @ViewChild('nuevosModal') nuevosModal: ModalComponent;
+   @ViewChild('antiguosModal') antiguosModal: ModalComponent;
+   @ViewChild('totalModal') totalModal: ModalComponent;
 
-  ioConnection: any;
+   ioConnection: any;
 
-  resumen_matriculas;
-  resumen_nuevos = "ñeñe";
-  resumen_antiguos = "OPAOPAOPA";
-  resumen_total = "KUJKKUKUUK";
+   resumen_matriculas;
+   resumen_nuevos;
+   resumen_antiguos = "OPAOPAOPA";
+   resumen_total = "KUJKKUKUUK";
 
-  annio_selected;
-  sede_selected;
-  tipo_carrera_selected;
+   pieChartLabels: string[];
+   pieChartData: number[];
+   pieChartType: string;
+   pieChartColors: any[];
 
-  ngOnInit() {
-    //this.initIoConnection(); //INICIO EL SOCKET
-  }
-
-  openNuevos() {
-    this.nuevosModal.open();
-  }
-
-  openAntiguos() {
-    this.antiguosModal.open();
-  }
-
-  openTotal() {
-    this.totalModal.open();
-  }
-
-  private initIoConnection(): void {
-    this.socketService.initSocket()
-
-    this.socketService.getMatriculas() //PIDO LOS DATOS AL SERVIDOR
-      .then(data => {
-        this.resumen_matriculas = data[0];
-        this.resumen_nuevos = data[1];
-
-        console.log("resumen_matriculas: ", this.resumen_matriculas);
-        console.log("resumen_matriculas_nuevos: ", this.resumen_nuevos);
-
-      })
-      .catch(error => console.log(error));
-
-    this.ioConnection = this.socketService.onChange()
-      .subscribe((response) => {
-        console.log("real time response: ", response)
-      })
-  }
-
-  constructor(
-    private socketService: SocketService,
-    private _formateador: FormateadorService
-  ) {
-
-    /*
-    this.resumen_matriculas = [
-      {
-        "ANNIO": 2018,
-        "SEDES": [
-          {
-            "SEDE": "TODOS",
-            "TIPOS_CARRERA": [
-              {
-                "TIPO_CARRERA": "TODOS",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "NO PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              }
-            ]
-          },
-          {
-            "SEDE": "ARICA",
-            "TIPOS_CARRERA": [
-              {
-                "TIPO_CARRERA": "TODOS",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "NO PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              }
-            ]
-          },
-          {
-            "SEDE": "IQUIQUE",
-            "TIPOS_CARRERA": [
-              {
-                "TIPO_CARRERA": "TODOS",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "NO PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              }
-            ]
-          }
-        ]
+   pieChartLegend: boolean = true; //NO USADO
+   pieChartOptions: any = {
+      scaleShowVerticalLines: false,
+      responsive: true,
+      legend: {
+         display: true,
+         position: 'left'
       },
-      {
-        "ANNIO": 2017,
-        "SEDES": [
-          {
-            "SEDE": "TODOS",
-            "TIPOS_CARRERA": [
-              {
-                "TIPO_CARRERA": "TODOS",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "NO PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              }
-            ]
-          },
-          {
-            "SEDE": "ARICA",
-            "TIPOS_CARRERA": [
-              {
-                "TIPO_CARRERA": "TODOS",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "NO PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              }
-            ]
-          },
-          {
-            "SEDE": "IQUIQUE",
-            "TIPOS_CARRERA": [
-              {
-                "TIPO_CARRERA": "TODOS",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              },
-              {
-                "TIPO_CARRERA": "NO PREGRADO",
-                "REGULAR": 111,
-                "INGRESO_ESPECIAL": 111,
-                "OTROS_INGRESOS": 111,
-                "ANTIGUOS": 111
-              }
-            ]
-          }
-        ]
+      scales: {
+         xAxes: [{
+            display: false
+         }],
+         yAxes: [{
+            ticks: {
+               beginAtZero: true
+            }
+         }]
       }
-    ];*/
+   };  //NO USADO
 
-    this.resumen_matriculas = [
-      {
-        "REGULAR": 1273,
-        "INGRESO_ESPECIAL": 352,
-        "OTROS_INGRESOS": 106,
-        "ANTIGUOS": 5526,
-        "ANIO": 2017,
-        "SEDE": "ARICA",
-        "TIPO_CARRERA": "PREGRADO"
-      },
-      {
-        "REGULAR": 0,
-        "INGRESO_ESPECIAL": 10,
-        "OTROS_INGRESOS": 93,
-        "ANTIGUOS": 213,
-        "ANIO": 2017,
-        "SEDE": "ARICA",
-        "TIPO_CARRERA": "NO PREGRADO"
-      },
-      {
-        "REGULAR": 186,
-        "INGRESO_ESPECIAL": 109,
-        "OTROS_INGRESOS": 11,
-        "ANTIGUOS": 1111,
-        "ANIO": 2017,
-        "SEDE": "IQUIQUE",
-        "TIPO_CARRERA": "PREGRADO"
-      },
-      {
-        "REGULAR": 0,
-        "INGRESO_ESPECIAL": 0,
-        "OTROS_INGRESOS": 0,
-        "ANTIGUOS": 9,
-        "ANIO": 2017,
-        "SEDE": "IQUIQUE",
-        "TIPO_CARRERA": "NO PREGRADO"
-      },
-      {
-        "REGULAR": 1223,
-        "INGRESO_ESPECIAL": 348,
-        "OTROS_INGRESOS": 136,
-        "ANTIGUOS": 5455,
-        "ANIO": 2016,
-        "SEDE": "ARICA",
-        "TIPO_CARRERA": "PREGRADO"
-      },
-      {
-        "REGULAR": 0,
-        "INGRESO_ESPECIAL": 0,
-        "OTROS_INGRESOS": 531,
-        "ANTIGUOS": 613,
-        "ANIO": 2016,
-        "SEDE": "ARICA",
-        "TIPO_CARRERA": "NO PREGRADO"
-      },
-      {
-        "REGULAR": 208,
-        "INGRESO_ESPECIAL": 103,
-        "OTROS_INGRESOS": 13,
-        "ANTIGUOS": 1145,
-        "ANIO": 2016,
-        "SEDE": "IQUIQUE",
-        "TIPO_CARRERA": "PREGRADO"
-      },
-      {
-        "REGULAR": 0,
-        "INGRESO_ESPECIAL": 0,
-        "OTROS_INGRESOS": 0,
-        "ANTIGUOS": 41,
-        "ANIO": 2016,
-        "SEDE": "IQUIQUE",
-        "TIPO_CARRERA": "NO PREGRADO"
-      },
-      {
-        "REGULAR": 1285,
-        "INGRESO_ESPECIAL": 193,
-        "OTROS_INGRESOS": 139,
-        "ANTIGUOS": 5677,
-        "ANIO": 2015,
-        "SEDE": "ARICA",
-        "TIPO_CARRERA": "PREGRADO"
-      },
-      {
-        "REGULAR": 1,
-        "INGRESO_ESPECIAL": 17,
-        "OTROS_INGRESOS": 797,
-        "ANTIGUOS": 942,
-        "ANIO": 2015,
-        "SEDE": "ARICA",
-        "TIPO_CARRERA": "NO PREGRADO"
-      },
-      {
-        "REGULAR": 231,
-        "INGRESO_ESPECIAL": 53,
-        "OTROS_INGRESOS": 9,
-        "ANTIGUOS": 1248,
-        "ANIO": 2015,
-        "SEDE": "IQUIQUE",
-        "TIPO_CARRERA": "PREGRADO"
-      },
-      {
-        "REGULAR": 0,
-        "INGRESO_ESPECIAL": 0,
-        "OTROS_INGRESOS": 41,
-        "ANTIGUOS": 23,
-        "ANIO": 2015,
-        "SEDE": "IQUIQUE",
-        "TIPO_CARRERA": "NO PREGRADO"
-      }
-    ];
+   color_map = [
+      '#f44336', //red
+      '#9c27b0', //purple
+      '#3f51b5', //indigo
+      '#03a9f4', //light_blue
+      '#4caf50', //green
+      '#ffc107', //amber
+      '#cddc39', //lime
+      '#ff5722', //deep_orange
+      '#607d8b', //blue_gray
+      '#e91e63', //pink
+      '#673ab7', //deep_purple
+      '#00bcd4', //cyan
+      '#8bc34a', //lightgreen
+      '#ffeb3b', //yellow
+      '#ff9800', //orange
+      '#9e9e9e', //gray
+      '#2196f3', //blue
+      '#009688', //teal
+      '#795548'
+   ]; //BORRAR
 
-    console.log(this.resumen_matriculas);
-    let nov = this._formateador.resumenMatriculas(this.resumen_matriculas);
-    console.log(nov);
-    
+   anio_selected;
+   sede_selected;
+   tipo_carrera_selected;
+   data_selected;
 
-    this.annio_selected = 0;
-    this.sede_selected = 0;
-    this.tipo_carrera_selected = 0;
-  }
+   ready_resumen;
+   ready_chart;
 
 
+   constructor(
+      private socketService: SocketService,
+      private _formateador: FormateadorService
+   ) {
+      this.ready_chart = false;
+      this.ready_resumen = false;
 
+      this.anio_selected = 0;
+      this.sede_selected = 0;
+      this.tipo_carrera_selected = 0;
 
+      this.pieChartType = 'pie';
+      this.pieChartLabels = ['Ingreso Regular', 'Ingreso Especial', 'Otros Ingresos', 'Antiguos'];
+      this.pieChartColors = [{ backgroundColor: ['#f44336', '#9c27b0', '#3f51b5', '#03a9f4'] }];
+   }
+
+   ngOnInit() {
+      //this.initIoConnection(); //INICIO EL SOCKET
+   }
+
+   changeValue() {
+      this.data_selected = this.resumen_matriculas[this.anio_selected].SEDES[this.sede_selected].TIPOS_CARRERA[this.tipo_carrera_selected];
+      this.pieChartData = [
+         this.data_selected['REGULAR'],
+         this.data_selected['INGRESO_ESPECIAL'],
+         this.data_selected['OTROS_INGRESOS'],
+         this.data_selected['ANTIGUOS']
+      ];
+   }
+
+   openNuevos() {
+      this.nuevosModal.open();
+   }
+
+   openAntiguos() {
+      this.antiguosModal.open();
+   }
+
+   openTotal() {
+      this.totalModal.open();
+   }
+
+   private initIoConnection(): void {
+      this.socketService.initSocket()
+
+      this.socketService.getMatriculas() //PIDO LOS DATOS AL SERVIDOR
+         .then(data => {
+            this.resumen_matriculas = this._formateador.resumenMatriculas(data[0]);
+            this.resumen_nuevos = this._formateador.resumenNuevos(data[1]);
+            console.log("resumen_matriculas: ", this.resumen_matriculas);
+            console.log("resumen_matriculas_nuevos: ", this.resumen_nuevos);
+            this.ready_resumen = true;
+
+            this.changeValue();
+            this.ready_chart = true;
+         })
+         .catch(error => console.log(error));
+
+      this.ioConnection = this.socketService.onChange()
+         .subscribe((data) => {
+
+            //RESUMEN
+            let clone_resumen: any[] = this.resumen_matriculas;
+            clone_resumen.shift(); //LE SACO EL PRIMER ELEMENTO
+            let real_resumen = this._formateador.resumenMatriculas(data[0]); //OBTENGO EL DATO FORMATEADO
+            clone_resumen.unshift(real_resumen[0]); //LO INSERTO COMO PRIMER ELEMENTO
+            this.resumen_matriculas = clone_resumen;
+            this.changeValue(); //APLICO LOS CAMBIOS EN EL GRAFICO
+
+            //NUEVOS
+            let clone_nuevos = this.resumen_nuevos;
+            clone_nuevos.shift();
+            let real_nuevos = this._formateador.resumenNuevos(data[1]);
+            clone_nuevos.unshift(real_nuevos[0]);
+            this.resumen_nuevos = clone_nuevos;
+
+            console.log(this.resumen_nuevos);
+            
+
+            
+            
+         })
+   }
 }
