@@ -756,7 +756,7 @@ table.cuerpoTabla tbody tr:nth-child(odd) td {
     background: #FFF;
 }
 
-table.cuerpoTabla tbody tr:hover td {
+table.cuerpoTabla tbody tr:hover td:not(.nohover) {
     background: #EFBF50 !important;
     /*background:#D3EEFD !important;*/
     color: #405989;

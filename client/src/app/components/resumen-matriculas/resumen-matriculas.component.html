@@ -100,9 +100,9 @@
       <table class="cuerpoTabla">
          <thead>
             <tr>
-               <th style=" width: 3%">#</th>
-               <th style=" width: 25%">TIPO DE INGRESO</th>
-               <th style=" width: 15%">MATRICULADOS</th>
+               <th style=" width: 2%">#</th>
+               <th style=" width: 27%">TIPO DE INGRESO</th>
+               <th style=" width: 14%">MATRICULADOS</th>
                <th style=" width: 8%;">ACCION</th>
                <th style="width: 49%;">%</th>
             </tr>
@@ -116,9 +116,10 @@
                   <a role="button" style="cursor: pointer" class="abrirArea" (click)="openNuevos()"></a>
                </th>
                <!-- GRAFICO -->
-               <td rowspan="8">
-
-               </td>
+               <th class="nohover" rowspan="8">
+                  <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)"
+                     (chartClick)="chartClicked($event)"></canvas>
+               </th>
             </tr>
             <tr>
                <td>1</td>
@@ -139,7 +140,7 @@
                <td>&#160;</td>
             </tr>
             <tr>
-               <td colspan="2" class="bold right" >SUBTOTAL</td>
+               <td colspan="2" class="bold right">SUBTOTAL</td>
                <td colspan="1">54</td>
                <td>
                </td>

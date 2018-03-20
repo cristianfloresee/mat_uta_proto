@@ -22,7 +22,7 @@ export class ResumenMatriculasComponent implements OnInit {
    resumen_nuevos;
    resumen_antiguos = "OPAOPAOPA";
    resumen_total = "KUJKKUKUUK";
-
+/*
    pieChartLabels: string[];
    pieChartData: number[];
    pieChartType: string;
@@ -48,6 +48,20 @@ export class ResumenMatriculasComponent implements OnInit {
       }
    };  //NO USADO
 
+*/
+
+   public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
+  public pieChartData:number[] = [300, 500, 100];
+  public pieChartType:string = 'pie';
+ 
+  // events
+  public chartClicked(e:any):void {
+    console.log(e);
+  }
+ 
+  public chartHovered(e:any):void {
+    console.log(e);
+  }
    color_map = [
       '#f44336', //red
       '#9c27b0', //purple
@@ -92,7 +106,7 @@ export class ResumenMatriculasComponent implements OnInit {
 
       this.pieChartType = 'pie';
       this.pieChartLabels = ['Ingreso Regular', 'Ingreso Especial', 'Otros Ingresos', 'Antiguos'];
-      this.pieChartColors = [{ backgroundColor: ['#f44336', '#9c27b0', '#3f51b5', '#03a9f4'] }];
+      // this.pieChartColors = [{ backgroundColor: ['#f44336', '#9c27b0', '#3f51b5', '#03a9f4'] }];
    }
 
    ngOnInit() {
