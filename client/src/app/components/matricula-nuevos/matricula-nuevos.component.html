@@ -1,148 +1,206 @@
-<div style="background-color: blue">
-   <h3>Nuevos</h3>
-   <!--{{nuevos['TOTAL'] | json}}-->
+<div class="contenedor">
 
-   <table>
-      <thead>
-         <tr>
-            <th rowspan="2">#</th>
-            <th rowspan="2">CARRERA</th>
-            <th rowspan="2">SELECCIONADOS</th>
-            <th rowspan="2">LISTA ESPERA</th>
-            <th rowspan="2">REPOSTULACIÓN</th>
-            <th rowspan="2">INGRESO ESPECIAL</th>
-            <th colspan="3">MATRICULA ADMISION</th>
-            <th rowspan="2">OTROS INGRESOS</th>
-            <th rowspan="2">MATRICULA TOTAL</th>
-         </tr>
-         <tr>
-            <th>VACANTES</th>
-            <th>MATRICULADOS</th>
-            <th>%</th>
-         </tr>
-      </thead>
-      <tbody>
-         <tr>
-            <td colspan="11" style="width:100%; text-align:left;">NOMBRE FACULTAD</td>
-         </tr>
-         <tr>
-            <td>1</td>
-            <td>CC - CARRERA</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-         </tr>
-         <tr>
-            <td>1</td>
-            <td>CC - CARRERA</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-         </tr>
-         <tr>
-            <td>1</td>
-            <td>CC - CARRERA</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-         </tr>
-         <tr>
-            <td>1</td>
-            <td>CC - CARRERA</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-         </tr>
-         <tr>
-            <td>1</td>
-            <td>CC - CARRERA</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-         </tr>
-         <tr>
-            <td>1</td>
-            <td>CC - CARRERA</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-         </tr>
-         <tr>
-            <td>1</td>
-            <td>CC - CARRERA</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-         </tr>
-         <tr>
-            <td>1</td>
-            <td>CC - CARRERA</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-         </tr>
-      </tbody>
-      <tfoot style="display: table">
-         <tr>
-            <td colspan="2">TOTAL</td>
-            <td>6</td>
-            <td>6</td>
-            <td>6</td>
-            <td>6</td>
-            <td>6</td>
-            <td>6</td>
-            <td>6</td>
-            <td>6</td>
-            <td>6</td>
-         </tr>
-      </tfoot>
-   </table>
+   <div class="filtros">
+      <table class="filtrosTabla">
+         <thead>
+            <tr>
+               <th colspan="5">ALUMNOS NUEVOS</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <th style="width: 10%;">AÑO</th>
+               <td  style="width: 40%;">2017</td>
+               <th  style="width: 10%;">SEDE</th>
+               <td  colspan="2" style="width: 40%;">
+                  ARICA
+               </td>
+            </tr>
+            <tr>
+               <th>TIPO DE CARRERA</th>
+               <td colspan="3">
+                  PREGRADO
+               </td>
+               <td style="width: 3%; text-align: center">
+                  <a role="button" class="icon-only pdf"></a>
+               </td>
+            </tr>
+      </table>
+   </div>
+
+   <div class="cuerpo101">
+      <table class="cuerpoTabla scroll" style="min-width: 1220px">
+         <thead>
+            <tr>
+               <th style="width: 2%;" rowspan="2">#</th>
+               <th style="width: 28%;" rowspan="2">CARRERA</th>
+               <th style="width: 9%;" rowspan="2">SELECCIONADOS</th>
+               <th style="width: 6%;" rowspan="2">LISTA ESPERA</th>
+               <th style="width: 9%;" rowspan="2">REPOSTULACIÓN</th>
+               <th style="width: 6%;" rowspan="2">INGRESO ESPECIAL</th>
+               <th colspan="3">MATRICULA ADMISION</th>
+               <th style="width: 6%;" rowspan="2">OTROS INGRESOS</th>
+               <th style="width: 7%;" rowspan="2">MATRICULA TOTAL</th>
+            </tr>
+            <tr>
+               <th>VACANTES</th>
+               <th>MATRICULADOS</th>
+               <th>%</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="nohover">
+               <th colspan="11" class="fullrow">FACULTAD DE CIENCIAS</th>
+            </tr>
+            <tr>
+               <td style="width: 2%">1</td>
+               <td class="string" style="width: 28%;">
+                  PEDAGOGIA EN EDUCACION BASICA
+               </td>
+               <td style="width: 9%;">25</td>
+               <td style="width: 6%;">23</td>
+               <td style="width: 9%;">32</td>
+               <td style="width: 6%;">44</td>
+               <td>43</td>
+               <td>65</td>
+               <td>25</td>
+               <td style="width: 6%;">34</td>
+               <td style="width: 7%;">15</td>
+            </tr>
+            <tr>
+               <td style="width: 2%;">1</td>
+               <td class="string" style="width: 28%;">
+                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
+               </td>
+               <td style="width: 9%;">25</td>
+               <td style="width: 6%;">23</td>
+               <td style="width: 9%;">32</td>
+               <td style="width: 6%;">44</td>
+               <td>43</td>
+               <td>65</td>
+               <td>25</td>
+               <td style="width: 6%;">34</td>
+               <td style="width: 7%;">15</td>
+            </tr>
+            <tr>
+               <td style="width: 2%;">1</td>
+               <td class="string" style="width: 28%;">
+                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
+               </td>
+               <td style="width: 9%;">25</td>
+               <td style="width: 6%;">23</td>
+               <td style="width: 9%;">32</td>
+               <td style="width: 6%;">44</td>
+               <td>43</td>
+               <td>65</td>
+               <td>25</td>
+               <td style="width: 6%;">34</td>
+               <td style="width: 7%;">15</td>
+            </tr>
+            <tr>
+               <td style="width: 2%;">1</td>
+               <td class="string" style="width: 28%;">
+                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
+               </td>
+               <td style="width: 9%;">25</td>
+               <td style="width: 6%;">23</td>
+               <td style="width: 9%;">32</td>
+               <td style="width: 6%;">44</td>
+               <td>43</td>
+               <td>65</td>
+               <td>25</td>
+               <td style="width: 6%;">34</td>
+               <td style="width: 7%;">15</td>
+            </tr>
+            <tr>
+               <td style="width: 2%;">1</td>
+               <td class="string" style="width: 28%;">
+                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
+               </td>
+               <td style="width: 9%;">25</td>
+               <td style="width: 6%;">23</td>
+               <td style="width: 9%;">32</td>
+               <td style="width: 6%;">44</td>
+               <td>43</td>
+               <td>65</td>
+               <td>25</td>
+               <td style="width: 6%;">34</td>
+               <td style="width: 7%;">15</td>
+            </tr>
+            <tr>
+               <td style="width: 2%;">1</td>
+               <td class="string" style="width: 28%;">
+                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
+               </td>
+               <td style="width: 9%;">25</td>
+               <td style="width: 6%;">23</td>
+               <td style="width: 9%;">32</td>
+               <td style="width: 6%;">44</td>
+               <td>43</td>
+               <td>65</td>
+               <td>25</td>
+               <td style="width: 6%;">34</td>
+               <td style="width: 7%;">15</td>
+            </tr>
+            <tr>
+               <td style="width: 2%;">1</td>
+               <td class="string" style="width: 28%;">
+                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
+               </td>
+               <td style="width: 9%;">25</td>
+               <td style="width: 6%;">23</td>
+               <td style="width: 9%;">32</td>
+               <td style="width: 6%;">44</td>
+               <td>43</td>
+               <td>65</td>
+               <td>25</td>
+               <td style="width: 6%;">34</td>
+               <td style="width: 7%;">15</td>
+            </tr>
+            <tr>
+               <td style="width: 2%;">1</td>
+               <td class="string" style="width: 28%;">
+                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
+               </td>
+               <td style="width: 9%;">25</td>
+               <td style="width: 6%;">23</td>
+               <td style="width: 9%;">32</td>
+               <td style="width: 6%;">44</td>
+               <td>43</td>
+               <td>65</td>
+               <td>25</td>
+               <td style="width: 6%;">34</td>
+               <td style="width: 7%;">15</td>
+            </tr>
+            <tr class="subtotal">
+               <th style="width: 30.085%" class="numerico">SUBTOTAL</th>
+               <th style="width: 9%">1437</th>
+               <th style="width: 6%;">99</th>
+               <th style="width: 9%;">44</th>
+               <th style="width: 6%;">455</th>
+               <th style="width: auto;">1608</th>
+               <th style="width: auto;">2035</th>
+               <th style="width: auto">127%</th>
+               <th style="width: 6%;">100</th>
+               <th style="width: 7%;">2135</th>
+            </tr>
+         </tbody>
+         <tfoot>
+            <tr>
+               <th style="width: 30.085%;" class="numerico">TOTAL</th>
+               <th style="width: 9%">1437</th>
+               <th style="width: 6%;">99</th>
+               <th style="width: 9%;">44</th>
+               <th style="width: 6%;">455</th>
+               <th style="width: auto;">1608</th>
+               <th style="width: auto;">2035</th>
+               <th style="width: auto">127%</th>
+               <th style="width: 6%;">100</th>
+               <th style="width: 7%;">2135</th>
+            </tr>
+
+         </tfoot>
+      </table>
+
+   </div>
 </div>

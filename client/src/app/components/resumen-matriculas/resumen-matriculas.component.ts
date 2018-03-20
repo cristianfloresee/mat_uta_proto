@@ -162,4 +162,9 @@ export class ResumenMatriculasComponent implements OnInit {
             
          })
    }
+
+   func(){
+      console.log("dsdsd");
+      console.log("sddsd");
+   }
 }

@@ -15,7 +15,7 @@
   left: 0;
   width: 100%;
   min-height: 100%;
-  background-color: rgba(0, 0, 0, .2); /*OPACIDAD DE FONDO*/
+  background-color: rgba(0, 0, 0, .4); /*OPACIDAD DE FONDO*/
   z-index: 42;
 }
 

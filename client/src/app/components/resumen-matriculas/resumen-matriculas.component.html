@@ -41,6 +41,184 @@
    </div>
 </div>-->
 
+<!-- PLANTILLA SOLAMENTE -->
+
+
+<div class="contenedor">
+   <div class="filtros">
+      <table class="filtrosTabla">
+         <thead>
+            <tr>
+               <th colspan="4">Titulo de la aplicacion [opcional]</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <th colspan="2" style="width: 10%;">AÑO</th>
+               <td colspan="2">
+                  <select style="width: 9%">
+                     <option>2018</option>
+                     <option>2017</option>
+                     <option>2016</option>
+                     <option>2015</option>
+                  </select>
+               </td>
+            </tr>
+            <tr>
+               <th colspan="2" style="width: 10%;">SEDE</th>
+               <td colspan="2">
+                  <select style="width: 9%">
+                     <option>TODAS</option>
+                     <option>ARICA</option>
+                     <option>IQUIQUE</option>
+                  </select>
+               </td>
+            </tr>
+            <tr>
+               <th colspan="2" style="width: 10%;">TIPO CARRERA</th>
+               <td colspan="1">
+                  <select style="width: 9%">
+                     <option>TODAS</option>
+                     <option>PREGRADO</option>
+                     <option>NO PREGRADO</option>
+                  </select>
+               </td>
+               <td style="width:3%; text-align: center">
+                  <a role="button" style="cursor: pointer" class="pdf" (click)="func()"></a>
+               </td>
+            </tr>
+         </tbody>
+         <tfoot>
+            <tr>
+               <th colspan="4">&#160;</th>
+            </tr>
+         </tfoot>
+      </table>
+   </div>
+
+   <div class="cuerpo50" style="width: 100%; height: auto;">
+      <table class="cuerpoTabla">
+         <thead>
+            <tr>
+               <th style=" width: 3%">#</th>
+               <th style=" width: 25%">TIPO DE INGRESO</th>
+               <th style=" width: 15%">MATRICULADOS</th>
+               <th style=" width: 8%;">ACCION</th>
+               <th style="width: 49%;">%</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <th colspan="3" style="text-align:left;">
+                  ALUMNOS NUEVOS
+               </th>
+               <th>
+                  <a role="button" style="cursor: pointer" class="abrirArea" (click)="openNuevos()"></a>
+               </th>
+               <!-- GRAFICO -->
+               <td rowspan="8">
+
+               </td>
+            </tr>
+            <tr>
+               <td>1</td>
+               <td class="string">INGRESO REGULAR</td>
+               <td>30</td>
+               <td>&#160;</td>
+            </tr>
+            <tr>
+               <td>2</td>
+               <td class="string">INGRESO ESPECIAL</td>
+               <td>25</td>
+               <td>&#160;</td>
+            </tr>
+            <tr>
+               <td>3</td>
+               <td class="string">OTROS INGRESOS</td>
+               <td>22</td>
+               <td>&#160;</td>
+            </tr>
+            <tr>
+               <td colspan="2" class="bold right" >SUBTOTAL</td>
+               <td colspan="1">54</td>
+               <td>
+               </td>
+            </tr>
+            <tr>
+               <th colspan="3" style="text-align:left;">
+                  ALUMNOS ANTIGUOS
+               </th>
+               <th>
+                  <a role="button" style="cursor: pointer" class="abrirArea" (click)="openNuevos()"></a>
+               </th>
+            </tr>
+            <tr>
+               <td colspan="2" class="bold right">SUBTOTAL</td>
+               <td colspan="1">66</td>
+               <td></td>
+            </tr>
+            <tr>
+               <th colspan="2" style="text-align:left;">
+                  MATRICULA TOTAL
+               </th>
+               <th colspan="1">131</th>
+               <th>
+                  <a role="button" style="cursor: pointer" class="abrirArea" (click)="openNuevos()"></a>
+               </th>
+            </tr>
+         </tbody>
+         <tfoot>
+            <tr>
+               <th colspan="5">&#160;</th>
+            </tr>
+         </tfoot>
+      </table>
+
+   </div>
+</div>
+
+
+
+<modal #nuevosModal>
+   <ng-template #modalHeader>
+      <div style="width: 100%;">
+         <h2>Alumnos Nuevos</h2>
+      </div>
+   </ng-template>
+   <ng-template #modalBody>
+
+      <app-matricula-nuevos></app-matricula-nuevos>
+   </ng-template>
+</modal>
+
+
+<modal #antiguosModal>
+   <ng-template #modalHeader>
+      <div style="width: 100%;">
+         <h2>Alumnos Antiguos</h2>
+      </div>
+   </ng-template>
+   <ng-template #modalBody>
+      <app-matricula-antiguos [antiguos]="resumen_antiguos"></app-matricula-antiguos>
+   </ng-template>
+</modal>
+
+<modal #totalModal>
+   <ng-template #modalHeader>
+      <div style="width: 100%;">
+         <h2>Alumnos Total</h2>
+      </div>
+   </ng-template>
+   <ng-template #modalBody>
+      <app-matricula-total [total]="resumen_total"></app-matricula-total>
+   </ng-template>
+</modal>
+
+
+
+<!-- FIN DE LA PLANTILLA -->
+<!--<app-matricula-nuevos [nuevos]="resumen_nuevos[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]"></app-matricula-nuevos>-->
+<!--
 <div id="content" style="height: 600px; background-color: yellow">
    <div class="reader">
 
@@ -51,12 +229,12 @@
 
          <modal #nuevosModal>
             <ng-template #modalHeader>
-               <div style="width: 100%; background-color: green">
+               <div style="width: 100%;">
                   <h2>Alumnos Nuevos</h2>
                </div>
             </ng-template>
             <ng-template #modalBody>
-               <!--<app-matricula-nuevos [nuevos]="resumen_nuevos[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]"></app-matricula-nuevos>-->
+              
                <app-matricula-nuevos></app-matricula-nuevos>
             </ng-template>
          </modal>
@@ -64,7 +242,7 @@
 
          <modal #antiguosModal>
             <ng-template #modalHeader>
-               <div style="width: 100%; background-color: green">
+               <div style="width: 100%;">
                   <h2>Alumnos Antiguos</h2>
                </div>
             </ng-template>
@@ -75,7 +253,7 @@
 
          <modal #totalModal>
             <ng-template #modalHeader>
-               <div style="width: 100%; background-color: green">
+               <div style="width: 100%;">
                   <h2>Alumnos Total</h2>
                </div>
             </ng-template>
@@ -87,3 +265,6 @@
       </div>
    </div>
 </div>
+-->
+<!-- <a role="button" style="cursor: pointer" class="pdf" (click)="func()"></a> -->
+<!-- <a role="button" (click)="func()">DDDDD</a> -->
