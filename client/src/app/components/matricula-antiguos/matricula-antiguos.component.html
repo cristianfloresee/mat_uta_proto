@@ -1,5 +1,77 @@
-<div style="background-color: blue">
-  <h3>Antiguos</h3>
-  {{antiguos}}
-</div>
+<div class="contenedor">
 
+   <div class="filtros scroll">
+      <table class="filtrosTabla">
+         <thead>
+            <tr>
+               <th colspan="5">ALUMNOS ANTIGUOS</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <th style="width: 12%;">AÑO</th>
+               <td style="width: 38%;">{{selected.ANIO}}</td>
+               <th style="width: 10%;">SEDE</th>
+               <td colspan="2" style="width: 40%;">
+                  {{selected.SEDE}}
+               </td>
+            </tr>
+            <tr>
+               <th>TIPO DE CARRERA</th>
+               <td colspan="3">
+                  {{selected.TIPO_CARRERA}}
+               </td>
+               <td style="width: 3%; text-align: center">
+                  <a role="button" class="icon-only pdf"></a>
+               </td>
+            </tr>
+      </table>
+   </div>
+
+   <div class="cuerpo101">
+      <table class="cuerpoTabla scroll" style="min-width: 1220px">
+         <thead>
+            <tr>
+               <th style="width: 2%;" rowspan="2">#</th>
+               <th style="width: 28%;" rowspan="2">CARRERA</th>
+               <th style="width: 9%;" rowspan="2">ANTIGUOS</th>
+               <th style="width: 6%;" rowspan="2">ESPERADOS</th>
+            </tr>
+         </thead>
+         <tbody>
+            <!--  -->
+            <div style="all: none" *ngFor="let facultad of antiguos['FACULTADES']">
+               <tr class="nohover">
+                  <th colspan="11" class="fullrow">{{facultad.FACULTAD}}</th>
+               </tr>
+               <tr *ngFor="let carrera of facultad['CARRERAS']">
+                     <td style="width: 2%">1</td>
+                     <td class="string" style="width: 28%;">
+                           {{carrera.CARRERA}}
+                     </td>
+                     <td style="width: 9%;"> {{carrera.ANTIGUOS}}</td>
+                     <td style="width: 6%;"> {{carrera.ESPERADOS}}</td>
+                  
+               </tr>
+            </div>
+
+            <!--
+            <tr class="subtotal">
+               <th style="width: 30.085%" class="numerico">SUBTOTAL</th>
+               <th style="width: 9%">1437</th>
+               <th style="width: 6%;">99</th>
+            </tr>-->
+         </tbody>
+         <!--
+         <tfoot>
+            <tr>
+               <th style="width: 30.085%;" class="numerico">TOTAL</th>
+               <th style="width: 9%">1437</th>
+               <th style="width: 6%;">99</th>
+            </tr>
+         </tfoot>-->
+      </table>
+
+   </div>
+
+</div>

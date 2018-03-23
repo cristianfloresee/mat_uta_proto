@@ -41,51 +41,45 @@
    </div>
 </div>-->
 
+<!-- {{temporal | json}} -->
 <!-- PLANTILLA SOLAMENTE -->
-
-
-<div class="contenedor">
+<div *ngIf="ready_resumen" class="contenedor">
    <div class="filtros">
       <table class="filtrosTabla">
          <thead>
             <tr>
-               <th colspan="4">Titulo de la aplicacion [opcional]</th>
+               <th colspan="4">MATRÍCULA DE ALUMNOS EN TIEMPO REAL</th>
             </tr>
          </thead>
          <tbody>
+
             <tr>
                <th colspan="2" style="width: 10%;">AÑO</th>
                <td colspan="2">
-                  <select style="width: 9%">
-                     <option>2018</option>
-                     <option>2017</option>
-                     <option>2016</option>
-                     <option>2015</option>
+                  <select style="width: 12%" [(ngModel)]="anio_selected" (change)="changeValue()">
+                     <option *ngFor="let res of resumen_matriculas; let i=index" [ngValue]="i">{{ res.ANIO }}</option>
                   </select>
                </td>
             </tr>
             <tr>
                <th colspan="2" style="width: 10%;">SEDE</th>
                <td colspan="2">
-                  <select style="width: 9%">
-                     <option>TODAS</option>
-                     <option>ARICA</option>
-                     <option>IQUIQUE</option>
+                  <select style="width: 12%" [(ngModel)]="sede_selected" (change)="changeValue()">
+                     <option *ngFor="let sede of resumen_matriculas[anio_selected].SEDES; let j=index" [ngValue]="j">{{ sede.SEDE }}</option>
                   </select>
                </td>
             </tr>
             <tr>
                <th colspan="2" style="width: 10%;">TIPO CARRERA</th>
                <td colspan="1">
-                  <select style="width: 9%">
-                     <option>TODAS</option>
-                     <option>PREGRADO</option>
-                     <option>NO PREGRADO</option>
+                  <select style="width: 12.5%" [(ngModel)]="tipo_carrera_selected" (change)="changeValue()">
+                     <option *ngFor="let tipo_carrera of resumen_matriculas[anio_selected].SEDES[sede_selected].TIPOS_CARRERA; let k=index" [ngValue]="k">{{ tipo_carrera.TIPO_CARRERA }}</option>
                   </select>
                </td>
                <td style="width:3%; text-align: center">
                   <a role="button" style="cursor: pointer" class="pdf" (click)="func()"></a>
                </td>
+
             </tr>
          </tbody>
          <tfoot>
@@ -96,6 +90,7 @@
       </table>
    </div>
 
+   
    <div class="cuerpo50" style="width: 100%; height: auto;">
       <table class="cuerpoTabla">
          <thead>
@@ -115,33 +110,41 @@
                <th>
                   <a role="button" style="cursor: pointer" class="abrirArea" (click)="openNuevos()"></a>
                </th>
-               <!-- GRAFICO -->
-               <th class="nohover" rowspan="8">
-                  <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)"
-                     (chartClick)="chartClicked($event)"></canvas>
+               
+
+               <th style="padding: 5px 0 8px" class="nohover" rowspan="8">
+                  <canvas baseChart 
+                     [data]="pieChartData"
+                     [labels]="pieChartLabels"
+                     [chartType]="pieChartType"
+                     [colors]="pieChartColors"
+                  ></canvas>
                </th>
             </tr>
+
+            <!--  -->
+          
             <tr>
                <td>1</td>
                <td class="string">INGRESO REGULAR</td>
-               <td>30</td>
+               <td>{{data_selected.REGULAR}}</td>
                <td>&#160;</td>
             </tr>
             <tr>
                <td>2</td>
                <td class="string">INGRESO ESPECIAL</td>
-               <td>25</td>
+               <td>{{data_selected.INGRESO_ESPECIAL}}</td>
                <td>&#160;</td>
             </tr>
             <tr>
                <td>3</td>
                <td class="string">OTROS INGRESOS</td>
-               <td>22</td>
+               <td>{{data_selected.OTROS_INGRESOS}}</td>
                <td>&#160;</td>
             </tr>
-            <tr>
-               <td colspan="2" class="bold right">SUBTOTAL</td>
-               <td colspan="1">54</td>
+            <tr class="subtotal">
+               <td colspan="2" class="bold right">TOTAL ALUMNOS NUEVOS</td>
+               <td colspan="1">{{data_selected.TOTAL_NUEVOS}}</td>
                <td>
                </td>
             </tr>
@@ -150,21 +153,21 @@
                   ALUMNOS ANTIGUOS
                </th>
                <th>
-                  <a role="button" style="cursor: pointer" class="abrirArea" (click)="openNuevos()"></a>
+                  <a role="button" style="cursor: pointer" class="abrirArea" (click)="openAntiguos()"></a>
                </th>
             </tr>
-            <tr>
-               <td colspan="2" class="bold right">SUBTOTAL</td>
-               <td colspan="1">66</td>
+            <tr class="subtotal">
+               <td colspan="2" class="bold right">TOTAL ALUMNOS ANTIGUOS</td>
+               <td colspan="1">{{data_selected.ANTIGUOS}}</td>
                <td></td>
             </tr>
             <tr>
                <th colspan="2" style="text-align:left;">
                   MATRICULA TOTAL
                </th>
-               <th colspan="1">131</th>
+               <th colspan="1">{{data_selected.TOTAL_MATRICULA}}</th>
                <th>
-                  <a role="button" style="cursor: pointer" class="abrirArea" (click)="openNuevos()"></a>
+                  <a role="button" style="cursor: pointer" class="abrirArea" (click)="openTotal()"></a>
                </th>
             </tr>
          </tbody>
@@ -179,37 +182,21 @@
 </div>
 
 
-
+<!-- MODALS -->
 <modal #nuevosModal>
-   <ng-template #modalHeader>
-      <div style="width: 100%;">
-         <h2>Alumnos Nuevos</h2>
-      </div>
-   </ng-template>
    <ng-template #modalBody>
-
       <app-matricula-nuevos></app-matricula-nuevos>
    </ng-template>
 </modal>
 
 
 <modal #antiguosModal>
-   <ng-template #modalHeader>
-      <div style="width: 100%;">
-         <h2>Alumnos Antiguos</h2>
-      </div>
-   </ng-template>
    <ng-template #modalBody>
-      <app-matricula-antiguos [antiguos]="resumen_antiguos"></app-matricula-antiguos>
+      <app-matricula-antiguos [antiguos]="resumen_antiguos[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]" [selected]="obj_selected"></app-matricula-antiguos>
    </ng-template>
 </modal>
 
 <modal #totalModal>
-   <ng-template #modalHeader>
-      <div style="width: 100%;">
-         <h2>Alumnos Total</h2>
-      </div>
-   </ng-template>
    <ng-template #modalBody>
       <app-matricula-total [total]="resumen_total"></app-matricula-total>
    </ng-template>

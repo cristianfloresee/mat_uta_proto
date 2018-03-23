@@ -1,6 +1,6 @@
 <div class="contenedor">
 
-   <div class="filtros">
+   <div class="filtros scroll">
       <table class="filtrosTabla">
          <thead>
             <tr>
@@ -9,10 +9,10 @@
          </thead>
          <tbody>
             <tr>
-               <th style="width: 10%;">AÑO</th>
-               <td  style="width: 40%;">2017</td>
-               <th  style="width: 10%;">SEDE</th>
-               <td  colspan="2" style="width: 40%;">
+               <th style="width: 12%;">AÑO</th>
+               <td style="width: 38%;">2017</td>
+               <th style="width: 10%;">SEDE</th>
+               <td colspan="2" style="width: 40%;">
                   ARICA
                </td>
             </tr>
@@ -42,7 +42,7 @@
                <th style="width: 6%;" rowspan="2">OTROS INGRESOS</th>
                <th style="width: 7%;" rowspan="2">MATRICULA TOTAL</th>
             </tr>
-            <tr>
+            <tr class="notr">
                <th>VACANTES</th>
                <th>MATRICULADOS</th>
                <th>%</th>
@@ -198,9 +198,24 @@
                <th style="width: 6%;">100</th>
                <th style="width: 7%;">2135</th>
             </tr>
+            <tr>
+               <td colspan="10">
+                  <div class="legend">
+                     <div class="square red"></div>
+                     <div class="text"> 0% - 60%</div>
+                     <div class="square orange"></div>
+                     <div class="text"> 61% - 90% </div>
+                     <div class="square yellow"></div>
+                     <div class="text"> 91% - 99% </div>
+                     <div class="square green"></div>
+                     <div class="text"> >= 100% </div>
+                  </div>
+               </td>
+            </tr>
 
          </tfoot>
       </table>
 
    </div>
+
 </div>

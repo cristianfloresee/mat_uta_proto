@@ -9,7 +9,7 @@ var object_format = { outFormat: oracledb.OBJECT };
 async function getMatriculas(req, res) {
 	try {
 		let conn = await pool.getPool().getConnection()
-		let matriculados, nuevos_matriculados;
+		let matriculados, nuevos_matriculados, antiguos_matriculados, total_matriculas;
 
 		if (req.url != '/orcl12c') {
 			console.log("consulta API...");
@@ -19,6 +19,13 @@ async function getMatriculas(req, res) {
 
 			nuevos_matriculados = conn.execute(
 				'SELECT * FROM V_RESUMEN_MATRICULADOS_NUEVOS_FINAL', {}, object_format
+			)
+
+			antiguos_matriculados = conn.execute(
+				'SELECT * FROM V_RESUMEN_MATRICULADOS_ANTIGUOS_FINAL', {}, object_format
+			)
+			total_matriculas = conn.execute(
+				'SELECT * FROM V_RESUMEN_MATRICULADOS_TOTAL_FINAL', {}, object_format
 			)
 		}
 		else {
@@ -30,11 +37,21 @@ async function getMatriculas(req, res) {
 			nuevos_matriculados = conn.execute(
 				'SELECT * FROM V_RESUMEN_MATRICULADOS_NUEVOS_FINAL WHERE ANIO = 2017', {}, object_format
 			)
+
+			antiguos_matriculados = conn.execute(
+				'SELECT * FROM V_RESUMEN_MATRICULADOS_ANTIGUOS_FINAL WHERE ANIO = 2017', {}, object_format
+			)
+
+			total_matriculas = conn.execute(
+				'SELECT * FROM V_RESUMEN_MATRICULADOS_TOTAL_FINAL WHERE ANIO = 2017', {}, object_format
+			)
 		}
 
-		let results = [await matriculados, await nuevos_matriculados]
+		let results = [await matriculados, await nuevos_matriculados, await antiguos_matriculados, await total_matriculas]
 		results[0] = results[0].rows;
 		results[1] = results[1].rows;
+		results[2] = results[2].rows;
+		results[3] = results[3].rows;
 
 		let release = await conn.release()
 

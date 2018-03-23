@@ -12,7 +12,7 @@ body.modal-open {
   color: #333;
   /*background-color: green;*/
   background-color: white;
-  padding: 10px; /*MAYOR PADDING CRECE EL CUADRADO MODAL*/
+  padding: 10px 8px 5px; /*MAYOR PADDING CRECE EL CUADRADO MODAL*/
 }
 
 .modal-header {

@@ -12,33 +12,41 @@
 
 /*====== ESTILOS NUEVOS ======*/
 
-.scroll tbody {
+.subtotal td{  
+    background: #96A8B9 !important;
+    color: #2D396C !important;
+    border: 1px solid #446380;
+    height: 25px;
+    width: 20px;
+}
+
+.cuerpoTabla.scroll tbody {
     display: block;
     height: 200px;
     overflow-y: scroll;
     width: 100%;
 }
 
-.scroll thead,
-.scroll tfoot {
+.cuerpoTabla.scroll thead,
+.cuerpoTabla.scroll tfoot {
     display: table;
     width: 100%;
     table-layout: fixed;
 }
 
-.scroll tbody tr {
+.cuerpoTabla.scroll tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed;
 }
 
-.scroll th {
+.cuerpoTabla.scroll th {
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.scroll thead,
-.scroll tfoot {
+.cuerpoTabla.scroll thead,
+.cuerpoTabla.scroll tfoot {
     width: calc(100%);
     /* width: calc(100% - 17px); */
     background-color: #F1F1F1;
@@ -50,7 +58,8 @@
     background: #FFFFFF;
     width: 100%;
     /*MODIFICADO*/
-    padding: 1px;
+    padding: 1px 2px 1px 1px/*ARREGLANDO EL BORDER-SPACING*/
+    ;
     border: 1px solid #CCCCCC;
     margin: 3px auto;
     /*margin-top: 1px;*/
@@ -68,13 +77,14 @@
     cursor: pointer;
 }
 
-.bold{
-   font-weight: bold;
+.bold {
+    font-weight: bold;
 }
 
-.right{
-   text-align: right !important;
+.right {
+    text-align: right !important;
 }
+
 
 /*====== ESTILOS UTA ======*/
 
@@ -175,7 +185,7 @@ hr {
     width: 99%;
     left: auto;
     right: auto;
-    margin: 0 auto;
+    margin: auto;
     /* NUEVO */
 }
 
@@ -191,6 +201,10 @@ hr {
     border-radius: 4px 4px 0 0;
     margin: auto;
     /*NUEVO*/
+}
+
+.filtros.scroll {
+    padding: 2px;
 }
 
 .botonera {
@@ -355,8 +369,15 @@ table.filtrosTabla tbody th,
 table.filtrosTabla tbody td {
     color: #2D396C;
     /*AGREGADO*/
-    padding: 3px 5px;
     margin: 3px;
+}
+
+table.filtrosTabla tbody td {
+   padding: 3px 5px;
+}
+
+table.filtrosTabla tbody th{
+   padding: 3px 10px;
 }
 
 table.filtrosTabla tbody th {
@@ -779,7 +800,10 @@ table.cuerpoTabla tbody td {
     background: #EBEEF1;
     height: 25px !important;
     text-align: center;
-    padding: 2px 5px;
+}
+/* oscar */
+table.cuerpoTabla tbody td:nth-child(n+2){
+   padding: 2px 10px;
 }
 
 table.cuerpoTabla tbody td:first-child:not([colspan]) {

@@ -1,0 +1,38 @@
+[
+   {
+      "REGULAR": 1273,
+      "INGRESO_ESPECIAL": 352,
+      "OTROS_INGRESOS": 106,
+      "ANTIGUOS": 5526,
+      "ANIO": 2017,
+      "SEDE": "ARICA",
+      "TIPO_CARRERA": "PREGRADO"
+   },
+   {
+      "REGULAR": 0,
+      "INGRESO_ESPECIAL": 10,
+      "OTROS_INGRESOS": 93,
+      "ANTIGUOS": 213,
+      "ANIO": 2017,
+      "SEDE": "ARICA",
+      "TIPO_CARRERA": "NO PREGRADO"
+   },
+   {
+      "REGULAR": 186,
+      "INGRESO_ESPECIAL": 109,
+      "OTROS_INGRESOS": 11,
+      "ANTIGUOS": 1111,
+      "ANIO": 2017,
+      "SEDE": "IQUIQUE",
+      "TIPO_CARRERA": "PREGRADO"
+   },
+   {
+      "REGULAR": 0,
+      "INGRESO_ESPECIAL": 0,
+      "OTROS_INGRESOS": 0,
+      "ANTIGUOS": 9,
+      "ANIO": 2017,
+      "SEDE": "IQUIQUE",
+      "TIPO_CARRERA": "NO PREGRADO"
+   }
+]

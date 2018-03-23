@@ -20,14 +20,16 @@ export class ResumenMatriculasComponent implements OnInit {
 
    resumen_matriculas;
    resumen_nuevos;
-   resumen_antiguos = "OPAOPAOPA";
-   resumen_total = "KUJKKUKUUK";
-/*
+   resumen_antiguos;
+   resumen_total;
+
    pieChartLabels: string[];
    pieChartData: number[];
    pieChartType: string;
    pieChartColors: any[];
 
+   obj_selected = {};
+   /* 
    pieChartLegend: boolean = true; //NO USADO
    pieChartOptions: any = {
       scaleShowVerticalLines: false,
@@ -47,21 +49,9 @@ export class ResumenMatriculasComponent implements OnInit {
          }]
       }
    };  //NO USADO
-
+ 
 */
 
-   public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
-  public pieChartData:number[] = [300, 500, 100];
-  public pieChartType:string = 'pie';
- 
-  // events
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
- 
-  public chartHovered(e:any):void {
-    console.log(e);
-  }
    color_map = [
       '#f44336', //red
       '#9c27b0', //purple
@@ -97,6 +87,7 @@ export class ResumenMatriculasComponent implements OnInit {
       private socketService: SocketService,
       private _formateador: FormateadorService
    ) {
+
       this.ready_chart = false;
       this.ready_resumen = false;
 
@@ -106,11 +97,11 @@ export class ResumenMatriculasComponent implements OnInit {
 
       this.pieChartType = 'pie';
       this.pieChartLabels = ['Ingreso Regular', 'Ingreso Especial', 'Otros Ingresos', 'Antiguos'];
-      // this.pieChartColors = [{ backgroundColor: ['#f44336', '#9c27b0', '#3f51b5', '#03a9f4'] }];
+      this.pieChartColors = [{ backgroundColor: ['#f44336', '#9c27b0', '#3f51b5', '#03a9f4'] }];
    }
 
    ngOnInit() {
-      //this.initIoConnection(); //INICIO EL SOCKET
+      this.initIoConnection(); //INICIO EL SOCKET
    }
 
    changeValue() {
@@ -121,6 +112,12 @@ export class ResumenMatriculasComponent implements OnInit {
          this.data_selected['OTROS_INGRESOS'],
          this.data_selected['ANTIGUOS']
       ];
+
+      this.obj_selected = {
+         ANIO: this.resumen_matriculas[this.anio_selected].ANIO,
+         SEDE: this.resumen_matriculas[this.anio_selected].SEDES[this.sede_selected].SEDE,
+         TIPO_CARRERA: this.resumen_matriculas[this.anio_selected].SEDES[this.sede_selected].TIPOS_CARRERA[this.tipo_carrera_selected].TIPO_CARRERA
+      }
    }
 
    openNuevos() {
@@ -140,14 +137,17 @@ export class ResumenMatriculasComponent implements OnInit {
 
       this.socketService.getMatriculas() //PIDO LOS DATOS AL SERVIDOR
          .then(data => {
-            this.resumen_matriculas = this._formateador.resumenMatriculas(data[0]);
-            this.resumen_nuevos = this._formateador.resumenNuevos(data[1]);
-            console.log("resumen_matriculas: ", this.resumen_matriculas);
-            console.log("resumen_matriculas_nuevos: ", this.resumen_nuevos);
-            this.ready_resumen = true;
+            console.log("Data charged ...");
 
+            this.resumen_matriculas = this._formateador.resumenMatriculas(data[0]);
+            this.ready_resumen = true;
             this.changeValue();
             this.ready_chart = true;
+
+            this.resumen_nuevos = this._formateador.resumen(data[1], 1);
+            this.resumen_antiguos = this._formateador.resumen(data[2], 2);
+            this.resumen_total = this._formateador.resumen(data[3], 3);
+
          })
          .catch(error => console.log(error));
 
@@ -155,30 +155,37 @@ export class ResumenMatriculasComponent implements OnInit {
          .subscribe((data) => {
 
             //RESUMEN
-            let clone_resumen: any[] = this.resumen_matriculas;
-            clone_resumen.shift(); //LE SACO EL PRIMER ELEMENTO
-            let real_resumen = this._formateador.resumenMatriculas(data[0]); //OBTENGO EL DATO FORMATEADO
-            clone_resumen.unshift(real_resumen[0]); //LO INSERTO COMO PRIMER ELEMENTO
-            this.resumen_matriculas = clone_resumen;
+            let clone_temporal: any[] = this.resumen_matriculas;
+            clone_temporal.shift(); //LE SACO EL PRIMER ELEMENTO
+            let new_data = this._formateador.resumenMatriculas(data[0]); //OBTENGO EL DATO FORMATEADO
+            clone_temporal.unshift(new_data[0]); //LO INSERTO COMO PRIMER ELEMENTO
+            this.resumen_matriculas = clone_temporal;
             this.changeValue(); //APLICO LOS CAMBIOS EN EL GRAFICO
 
             //NUEVOS
-            let clone_nuevos = this.resumen_nuevos;
-            clone_nuevos.shift();
-            let real_nuevos = this._formateador.resumenNuevos(data[1]);
-            clone_nuevos.unshift(real_nuevos[0]);
-            this.resumen_nuevos = clone_nuevos;
+            clone_temporal = this.resumen_nuevos;
+            clone_temporal.shift();
+            new_data = this._formateador.resumen(data[1], 1);
+            clone_temporal.unshift(new_data[0]);
+            this.resumen_nuevos = clone_temporal;
 
-            console.log(this.resumen_nuevos);
-            
+            //ANTIGUOS
+            clone_temporal = this.resumen_antiguos;
+            clone_temporal.shift();
+            new_data = this._formateador.resumen(data[2], 2);
+            clone_temporal.unshift(new_data[0]);
+            this.resumen_antiguos = clone_temporal;
 
-            
-            
+            //TOTAL
+            clone_temporal = this.resumen_total;
+            clone_temporal.shift();
+            new_data = this._formateador.resumen(data[3], 3);
+            clone_temporal.unshift(new_data[0]);
+            this.resumen_total = clone_temporal;
          })
    }
 
-   func(){
+   func() {
       console.log("dsdsd");
-      console.log("sddsd");
    }
 }

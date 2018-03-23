@@ -1,0 +1,36 @@
+.square{
+   height: 25px;
+   width: 7%;
+   display: inline-block;
+   vertical-align: middle;
+   margin-right: 1%;
+ }
+ 
+ .red {
+   background: #FF0000; 
+ }
+ .yellow{
+   background: #FFCC00; 
+ }
+ 
+ .green {
+   background: #006600; 
+ }
+ 
+ .orange{
+   background: #FF6600;
+ }
+ 
+ .legend {
+   text-align: center;
+   margin: .8rem.5rem;
+ }
+ 
+ .text {
+   display: inline-block;
+   vertical-align: middle;
+ }
+ 
+ div.square ~ div.square:nth-child(2n+1){
+    margin-left: 6%;
+ }
