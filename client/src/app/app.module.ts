@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ChartsModule } from 'ng2-charts';
 
 //MODULOS DEL CORE PERO QUE NO VIENEN POR DEFECTO
 import { HttpClientModule } from '@angular/common/http';
@@ -10,7 +11,6 @@ import { AppComponent } from './app.component';
 import { SocketService } from './services/socket.service';
 import { PdfService } from './services/pdf.service';
 
-import { ChartsModule } from 'ng2-charts';
 import { TransitionGroupComponent, TransitionGroupItemDirective } from './transition-group/transition-group.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

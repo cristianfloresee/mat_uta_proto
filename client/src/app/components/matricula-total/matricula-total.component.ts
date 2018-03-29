@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PdfService } from '../../services/pdf.service';
 
 @Component({
    selector: 'app-matricula-total',
@@ -7,8 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MatriculaTotalComponent implements OnInit {
    @Input() total: any;
    @Input() selected: any;
-
-   constructor() { }
+   @Input() canvas_url: any;
+   constructor(private pdfService: PdfService) { }
 
    ngOnInit() { }
 
@@ -18,6 +19,10 @@ export class MatriculaTotalComponent implements OnInit {
          acc += this.total['FACULTADES'][i]['CARRERAS'].length;
       }
       return acc;
+   }
+
+   pdfTotal() {
+      this.pdfService.generarTotal(this.total, this.selected, this.canvas_url);
    }
 
 }

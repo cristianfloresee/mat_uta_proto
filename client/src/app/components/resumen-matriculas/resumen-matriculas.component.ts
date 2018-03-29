@@ -26,6 +26,7 @@ export class ResumenMatriculasComponent implements OnInit, AfterViewChecked {
    resumen_antiguos;
    resumen_total;
 
+
    pieChartLegend: boolean = true;
    pieChartLabels: string[];
    pieChartData: number[];
@@ -34,8 +35,8 @@ export class ResumenMatriculasComponent implements OnInit, AfterViewChecked {
    pieOptions = {
       pieceLabel: {
          render: 'percentage',
-         arc: true,
-         fontColor: '#000',
+         fontColor: '#2D396C',
+         fontStyle: 'bold',
          position: 'outside'
       }
    };
@@ -45,13 +46,15 @@ export class ResumenMatriculasComponent implements OnInit, AfterViewChecked {
    anio_selected;
    sede_selected;
    tipo_carrera_selected;
-   data_selected;
+   data_selected = {};
 
    ready_resumen;
    ready_chart;
 
    canvas_url;
    loading;
+
+   change_data = {};
 
    constructor(
       private socketService: SocketService,
@@ -82,7 +85,27 @@ export class ResumenMatriculasComponent implements OnInit, AfterViewChecked {
    }
 
    changeValue() {
-      this.data_selected = this.resumen_matriculas[this.anio_selected].SEDES[this.sede_selected].TIPOS_CARRERA[this.tipo_carrera_selected];
+      let new_data = this.resumen_matriculas[this.anio_selected].SEDES[this.sede_selected].TIPOS_CARRERA[this.tipo_carrera_selected];
+      console.log(new_data);
+      if (new_data['REGULAR'] != this.data_selected['REGULAR']) {
+         console.log("cambio estilo");
+         this.change_data['TOTAL_MATRICULA'] = 'cambio';
+      }
+      else if (new_data['INGRESO_ESPECIAL'] != this.data_selected['INGRESO_ESPECIAL']){
+
+      }
+      else if (new_data['OTROS_INGRESOS'] != this.data_selected['OTROS_INGRESOS']){
+
+      }
+      else if(new_data['TOTAL_MATRICULA'] != this.data_selected['TOTAL_MATRICULA']){
+         this.change_data['TOTAL_MATRICULA'] = 'cambio';
+      }
+      else{
+         console.log("cambio estilo");
+         this.change_data['TOTAL_MATRICULA'] = 'cambio';
+      }
+
+      this.data_selected = new_data;
       this.pieChartData = [
          this.data_selected['REGULAR'],
          this.data_selected['INGRESO_ESPECIAL'],
@@ -181,12 +204,8 @@ export class ResumenMatriculasComponent implements OnInit, AfterViewChecked {
       return canvas2Img;
    }
 
-
    pdfResumen() {
       this.pdfService.generarResumen(this.data_selected, this.obj_selected, this.canvas_url);
    }
-
-   pdfNuevos() {
-      this.pdfService.generarResumen(this.resumen_nuevos[this.anio_selected].SEDES[this.sede_selected].TIPOS_CARRERA[this.tipo_carrera_selected], this.obj_selected, this.canvas_url);
-   }
+  
 }

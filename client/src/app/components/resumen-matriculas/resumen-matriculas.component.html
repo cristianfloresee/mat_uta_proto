@@ -7,6 +7,7 @@ top: 0;" *ngIf="!loading">
    <img style="display: flex; margin: 0 auto;" src="../../../assets/img/cargando.gif">
 </div>
 
+
 <div *ngIf="ready_resumen && loading" class="contenedor">
    <div class="filtros">
       <table class="filtrosTabla">
@@ -40,7 +41,7 @@ top: 0;" *ngIf="!loading">
                   </select>
                </td>
                <td style="width:3%; text-align: center">
-                  <a role="button" style="cursor: pointer" class="pdf" (click)="pdfNuevos()"></a>
+                  <a role="button" style="cursor: pointer" class="pdf" (click)="pdfResumen()"></a>
                </td>
             </tr>
          </tbody>
@@ -116,11 +117,11 @@ top: 0;" *ngIf="!loading">
                <td></td>
             </tr>
             <tr>
-               <th colspan="2" style="text-align:left;">
+               <th [ngClass]="change_data.TOTAL_MATRICULA" colspan="2" style="text-align:left;">
                   MATRICULA TOTAL
                </th>
-               <th colspan="1">{{data_selected.TOTAL_MATRICULA}}</th>
-               <th>
+               <th [ngClass]="change_data.TOTAL_MATRICULA" colspan="1">{{data_selected.TOTAL_MATRICULA}}</th>
+               <th [ngClass]="change_data.TOTAL_MATRICULA">
                   <a role="button" style="cursor: pointer" class="abrirArea" (click)="openTotal()"></a>
                </th>
             </tr>
@@ -134,24 +135,25 @@ top: 0;" *ngIf="!loading">
    </div>
 </div>
 
-<!-- MODALS -->
+
 <modal #nuevosModal>
    <ng-template #modalBody>
       <app-matricula-nuevos [nuevos]="resumen_nuevos[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]"
-         [selected]="obj_selected"></app-matricula-nuevos>
+         [selected]="obj_selected" [canvas_url]="canvas_url"></app-matricula-nuevos>
    </ng-template>
 </modal>
 
 <modal #antiguosModal>
    <ng-template #modalBody>
       <app-matricula-antiguos [antiguos]="resumen_antiguos[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]"
-         [selected]="obj_selected"></app-matricula-antiguos>
+         [selected]="obj_selected" [canvas_url]="canvas_url"></app-matricula-antiguos>
    </ng-template>
 </modal>
 
 <modal #totalModal>
    <ng-template #modalBody>
-      <app-matricula-total [total]="resumen_total[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]" [selected]="obj_selected"></app-matricula-total>
+      <app-matricula-total [total]="resumen_total[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]" [selected]="obj_selected"
+      [canvas_url]="canvas_url"></app-matricula-total>
    </ng-template>
 </modal>
 

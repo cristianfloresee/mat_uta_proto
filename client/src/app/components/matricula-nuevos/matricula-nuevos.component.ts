@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PdfService } from '../../services/pdf.service';
 
 @Component({
    selector: 'app-matricula-nuevos',
@@ -8,9 +9,10 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MatriculaNuevosComponent implements OnInit {
    @Input() nuevos: any;
    @Input() selected: any;
+   @Input() canvas_url: any;
 
    background_style;
-   constructor() { }
+   constructor(private pdfService: PdfService) { }
 
    ngOnInit() { }
 
@@ -27,6 +29,10 @@ export class MatriculaNuevosComponent implements OnInit {
       else if (value <= 90) return { 'background-color': '#FF6600', 'color': '#F1F1F1' }
       else if (value <= 99) return { 'background-color': '#FFCC00', 'color': '#F1F1F1' }
       else return { 'background-color': '#006600', 'color': '#F1F1F1' }
+   }
+
+   pdfNuevos() {
+      this.pdfService.generarNuevos(this.nuevos, this.selected, this.canvas_url);
    }
 
 

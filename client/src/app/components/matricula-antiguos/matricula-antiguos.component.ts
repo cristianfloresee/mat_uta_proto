@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PdfService } from '../../services/pdf.service';
 
 @Component({
    selector: 'app-matricula-antiguos',
@@ -7,8 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MatriculaAntiguosComponent implements OnInit {
    @Input() antiguos: any;
    @Input() selected: any;
+   @Input() canvas_url: any;
 
-   constructor() { }
+   constructor(private pdfService: PdfService) { }
 
    ngOnInit() { }
 
@@ -18,6 +20,10 @@ export class MatriculaAntiguosComponent implements OnInit {
          acc += this.antiguos['FACULTADES'][i]['CARRERAS'].length;
       }
       return acc;
+   }
+
+   pdfAntiguos() {
+      this.pdfService.generarAntiguos(this.antiguos, this.selected, this.canvas_url);
    }
 
 }
