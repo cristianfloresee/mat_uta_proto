@@ -1,9 +1,12 @@
-import { Component, ViewEncapsulation, ViewChild, OnInit } from '@angular/core';
-import { ResumenService } from "../../services/resumen.service";
+import { Component, ViewEncapsulation, ViewChild, OnInit, AfterViewChecked } from '@angular/core';
 import { ModalComponent } from '../../modal/modal.component';
 import { SocketService } from '../../services/socket.service';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 import { FormateadorService } from '../../services/formateador.service';
+import { PdfService } from '../../services/pdf.service';
+
+//PLUGIN CHART.JS
+import 'chart.piecelabel.js';
 
 @Component({
    selector: 'app-resumen-matriculas',
@@ -11,7 +14,7 @@ import { FormateadorService } from '../../services/formateador.service';
    styleUrls: ['./resumen-matriculas.component.css'],
    encapsulation: ViewEncapsulation.None,
 })
-export class ResumenMatriculasComponent implements OnInit {
+export class ResumenMatriculasComponent implements OnInit, AfterViewChecked {
    @ViewChild('nuevosModal') nuevosModal: ModalComponent;
    @ViewChild('antiguosModal') antiguosModal: ModalComponent;
    @ViewChild('totalModal') totalModal: ModalComponent;
@@ -23,56 +26,21 @@ export class ResumenMatriculasComponent implements OnInit {
    resumen_antiguos;
    resumen_total;
 
+   pieChartLegend: boolean = true;
    pieChartLabels: string[];
    pieChartData: number[];
    pieChartType: string;
    pieChartColors: any[];
+   pieOptions = {
+      pieceLabel: {
+         render: 'percentage',
+         arc: true,
+         fontColor: '#000',
+         position: 'outside'
+      }
+   };
 
    obj_selected = {};
-   /* 
-   pieChartLegend: boolean = true; //NO USADO
-   pieChartOptions: any = {
-      scaleShowVerticalLines: false,
-      responsive: true,
-      legend: {
-         display: true,
-         position: 'left'
-      },
-      scales: {
-         xAxes: [{
-            display: false
-         }],
-         yAxes: [{
-            ticks: {
-               beginAtZero: true
-            }
-         }]
-      }
-   };  //NO USADO
- 
-*/
-
-   color_map = [
-      '#f44336', //red
-      '#9c27b0', //purple
-      '#3f51b5', //indigo
-      '#03a9f4', //light_blue
-      '#4caf50', //green
-      '#ffc107', //amber
-      '#cddc39', //lime
-      '#ff5722', //deep_orange
-      '#607d8b', //blue_gray
-      '#e91e63', //pink
-      '#673ab7', //deep_purple
-      '#00bcd4', //cyan
-      '#8bc34a', //lightgreen
-      '#ffeb3b', //yellow
-      '#ff9800', //orange
-      '#9e9e9e', //gray
-      '#2196f3', //blue
-      '#009688', //teal
-      '#795548'
-   ]; //BORRAR
 
    anio_selected;
    sede_selected;
@@ -82,12 +50,14 @@ export class ResumenMatriculasComponent implements OnInit {
    ready_resumen;
    ready_chart;
 
+   canvas_url;
+   loading;
 
    constructor(
       private socketService: SocketService,
-      private _formateador: FormateadorService
+      private _formateador: FormateadorService,
+      private pdfService: PdfService
    ) {
-
       this.ready_chart = false;
       this.ready_resumen = false;
 
@@ -97,11 +67,18 @@ export class ResumenMatriculasComponent implements OnInit {
 
       this.pieChartType = 'pie';
       this.pieChartLabels = ['Ingreso Regular', 'Ingreso Especial', 'Otros Ingresos', 'Antiguos'];
-      this.pieChartColors = [{ backgroundColor: ['#f44336', '#9c27b0', '#3f51b5', '#03a9f4'] }];
+      this.pieChartColors = [{ backgroundColor: ['#DEB01F', '#C9631F', '#678FCA', '#303880'] }];
    }
 
    ngOnInit() {
       this.initIoConnection(); //INICIO EL SOCKET
+   }
+
+
+   //SE EJECUTA MULTIPLES VECES
+   ngAfterViewChecked() {
+      this.genCanvas();
+      this.canvas_url = this.getCanvasURL();
    }
 
    changeValue() {
@@ -120,6 +97,7 @@ export class ResumenMatriculasComponent implements OnInit {
       }
    }
 
+   /*============= PARA ABRIR LOS MODALS =============*/
    openNuevos() {
       this.nuevosModal.open();
    }
@@ -132,12 +110,13 @@ export class ResumenMatriculasComponent implements OnInit {
       this.totalModal.open();
    }
 
+   /*============= PARA ESCUCHAR LOS CAMBIOS EN TIEMPO REAL =============*/
    private initIoConnection(): void {
       this.socketService.initSocket()
 
       this.socketService.getMatriculas() //PIDO LOS DATOS AL SERVIDOR
          .then(data => {
-            console.log("Data charged ...");
+            this.loading = true;
 
             this.resumen_matriculas = this._formateador.resumenMatriculas(data[0]);
             this.ready_resumen = true;
@@ -185,7 +164,29 @@ export class ResumenMatriculasComponent implements OnInit {
          })
    }
 
-   func() {
-      console.log("dsdsd");
+   /*============= PARA OBTENER EL CANVAS =============*/
+   genCanvas() {
+      const c = <HTMLCanvasElement>document.getElementById('logo_uta_canvas');
+      const ctx = c.getContext('2d');
+      const img: any = document.getElementById('logo-uta');
+      c.width = img.width;
+      c.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+   }
+
+   //OBTIENE LA URL DEL LOGO UTA
+   getCanvasURL() {
+      const canvas = <HTMLCanvasElement>document.getElementById('logo_uta_canvas');
+      const canvas2Img = canvas.toDataURL('image/png', 1.0);
+      return canvas2Img;
+   }
+
+
+   pdfResumen() {
+      this.pdfService.generarResumen(this.data_selected, this.obj_selected, this.canvas_url);
+   }
+
+   pdfNuevos() {
+      this.pdfService.generarResumen(this.resumen_nuevos[this.anio_selected].SEDES[this.sede_selected].TIPOS_CARRERA[this.tipo_carrera_selected], this.obj_selected, this.canvas_url);
    }
 }

@@ -24,10 +24,12 @@
     "angular-custom-modal": "^1.1.0",
     "bootstrap": "^3.3.7",
     "chart.js": "^2.7.1",
+    "chart.piecelabel.js": "^0.9.0",
     "core-js": "^2.4.1",
     "jquery": "^3.3.1",
     "lodash": "^4.17.5",
-    "ng2-charts": "^1.6.0",
+    "ng2-charts": "1.6.0",
+    "pdfmake": "^0.1.36",
     "rxjs": "^5.5.6",
     "socket.io-client": "^2.0.4",
     "zone.js": "^0.8.19"

@@ -1,49 +1,13 @@
-<!--
-<div *ngIf="anio_selected!=null && sede_selected!=null && ready_resumen">
-
-   <label>AÑO</label>
-   <select [(ngModel)]="anio_selected" (change)="changeValue()">
-      <option *ngFor="let res of resumen_matriculas; let i=index" [ngValue]="i">{{ res.ANIO }}</option>
-   </select>
-
-   <label>SEDE</label>
-   <select [(ngModel)]="sede_selected" (change)="changeValue()">
-      <option *ngFor="let sede of resumen_matriculas[anio_selected].SEDES; let j=index" [ngValue]="j">{{ sede.SEDE }}</option>
-   </select>
-
-   <label>TIPO CARRERA</label>
-   <select [(ngModel)]="tipo_carrera_selected" (change)="changeValue()">
-      <option *ngFor="let tipo_carrera of resumen_matriculas[anio_selected].SEDES[sede_selected].TIPOS_CARRERA; let k=index" [ngValue]="k">{{ tipo_carrera.TIPO_CARRERA }}</option>
-   </select>
-
-<h3>Resumen</h3>
-
-<p>anio_selected: {{ anio_selected }}</p>
-<p>sede_selected: {{ sede_selected}}</p>
-<p>tipo_carrera_selected: {{ tipo_carrera_selected }}</p>
-
-<div *ngIf="resumen_matriculas[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected] as resumen">
-    REGULAR: {{resumen.REGULAR }} INGRESO ESPECIAL: {{resumen.INGRESO_ESPECIAL }} OTROS INGRESOS: {{resumen.OTROS_INGRESOS }}
-    ANTIGUOS: {{resumen.ANTIGUOS }}
+<div style="position: fixed;
+width: 100%;
+height:100%;
+display: flex;
+align-items: center;
+top: 0;" *ngIf="!loading">
+   <img style="display: flex; margin: 0 auto;" src="../../../assets/img/cargando.gif">
 </div>
-</div>
--->
-<!--
-<div class="col-md-7 col-xs-7" *ngIf="ready_chart" style="text-align: center;">
 
-   <div style="display: block" style="margin: auto; width: 100%;">
-        <canvas baseChart #baseChart="base-chart"
-          [data]="pieChartData"
-          [labels]="pieChartLabels"
-          [chartType]="pieChartType"
-          [colors]="pieChartColors"
-        ></canvas>
-   </div>
-</div>-->
-
-<!-- {{temporal | json}} -->
-<!-- PLANTILLA SOLAMENTE -->
-<div *ngIf="ready_resumen" class="contenedor">
+<div *ngIf="ready_resumen && loading" class="contenedor">
    <div class="filtros">
       <table class="filtrosTabla">
          <thead>
@@ -52,7 +16,6 @@
             </tr>
          </thead>
          <tbody>
-
             <tr>
                <th colspan="2" style="width: 10%;">AÑO</th>
                <td colspan="2">
@@ -77,9 +40,8 @@
                   </select>
                </td>
                <td style="width:3%; text-align: center">
-                  <a role="button" style="cursor: pointer" class="pdf" (click)="func()"></a>
+                  <a role="button" style="cursor: pointer" class="pdf" (click)="pdfNuevos()"></a>
                </td>
-
             </tr>
          </tbody>
          <tfoot>
@@ -90,15 +52,14 @@
       </table>
    </div>
 
-   
    <div class="cuerpo50" style="width: 100%; height: auto;">
       <table class="cuerpoTabla">
          <thead>
             <tr>
-               <th style=" width: 2%">#</th>
-               <th style=" width: 27%">TIPO DE INGRESO</th>
-               <th style=" width: 14%">MATRICULADOS</th>
-               <th style=" width: 8%;">ACCION</th>
+               <th style="width: 2%">#</th>
+               <th style="width: 27%">TIPO DE INGRESO</th>
+               <th style="width: 14%">MATRICULADOS</th>
+               <th style="width: 8%;">ACCION</th>
                <th style="width: 49%;">%</th>
             </tr>
          </thead>
@@ -110,20 +71,13 @@
                <th>
                   <a role="button" style="cursor: pointer" class="abrirArea" (click)="openNuevos()"></a>
                </th>
-               
-
                <th style="padding: 5px 0 8px" class="nohover" rowspan="8">
-                  <canvas baseChart 
-                     [data]="pieChartData"
-                     [labels]="pieChartLabels"
-                     [chartType]="pieChartType"
-                     [colors]="pieChartColors"
-                  ></canvas>
+                  <canvas id="cool-canvas" baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" [colors]="pieChartColors"
+                     [legend]="pieChartLegend" [options]="pieOptions">
+                  </canvas>
+
                </th>
             </tr>
-
-            <!--  -->
-          
             <tr>
                <td>1</td>
                <td class="string">INGRESO REGULAR</td>
@@ -143,7 +97,7 @@
                <td>&#160;</td>
             </tr>
             <tr class="subtotal">
-               <td colspan="2" class="bold right">TOTAL ALUMNOS NUEVOS</td>
+               <td colspan="2" class="bold right mypadd">TOTAL ALUMNOS NUEVOS</td>
                <td colspan="1">{{data_selected.TOTAL_NUEVOS}}</td>
                <td>
                </td>
@@ -157,7 +111,7 @@
                </th>
             </tr>
             <tr class="subtotal">
-               <td colspan="2" class="bold right">TOTAL ALUMNOS ANTIGUOS</td>
+               <td colspan="2" class="bold right mypadd">TOTAL ALUMNOS ANTIGUOS</td>
                <td colspan="1">{{data_selected.ANTIGUOS}}</td>
                <td></td>
             </tr>
@@ -177,82 +131,33 @@
             </tr>
          </tfoot>
       </table>
-
    </div>
 </div>
-
 
 <!-- MODALS -->
 <modal #nuevosModal>
    <ng-template #modalBody>
-      <app-matricula-nuevos></app-matricula-nuevos>
+      <app-matricula-nuevos [nuevos]="resumen_nuevos[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]"
+         [selected]="obj_selected"></app-matricula-nuevos>
    </ng-template>
 </modal>
 
-
 <modal #antiguosModal>
    <ng-template #modalBody>
-      <app-matricula-antiguos [antiguos]="resumen_antiguos[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]" [selected]="obj_selected"></app-matricula-antiguos>
+      <app-matricula-antiguos [antiguos]="resumen_antiguos[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]"
+         [selected]="obj_selected"></app-matricula-antiguos>
    </ng-template>
 </modal>
 
 <modal #totalModal>
    <ng-template #modalBody>
-      <app-matricula-total [total]="resumen_total"></app-matricula-total>
+      <app-matricula-total [total]="resumen_total[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]" [selected]="obj_selected"></app-matricula-total>
    </ng-template>
 </modal>
 
 
-
-<!-- FIN DE LA PLANTILLA -->
-<!--<app-matricula-nuevos [nuevos]="resumen_nuevos[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]"></app-matricula-nuevos>-->
-<!--
-<div id="content" style="height: 600px; background-color: yellow">
-   <div class="reader">
-
-      <div id="actions">
-         <button class="big" (click)="openNuevos()">Matricula Nuevos</button>
-         <button class="big" (click)="openAntiguos()">Matricula Antiguos</button>
-         <button class="big" (click)="openTotal()">Matricula Total</button>
-
-         <modal #nuevosModal>
-            <ng-template #modalHeader>
-               <div style="width: 100%;">
-                  <h2>Alumnos Nuevos</h2>
-               </div>
-            </ng-template>
-            <ng-template #modalBody>
-              
-               <app-matricula-nuevos></app-matricula-nuevos>
-            </ng-template>
-         </modal>
-
-
-         <modal #antiguosModal>
-            <ng-template #modalHeader>
-               <div style="width: 100%;">
-                  <h2>Alumnos Antiguos</h2>
-               </div>
-            </ng-template>
-            <ng-template #modalBody>
-               <app-matricula-antiguos [antiguos]="resumen_antiguos"></app-matricula-antiguos>
-            </ng-template>
-         </modal>
-
-         <modal #totalModal>
-            <ng-template #modalHeader>
-               <div style="width: 100%;">
-                  <h2>Alumnos Total</h2>
-               </div>
-            </ng-template>
-            <ng-template #modalBody>
-               <app-matricula-total [total]="resumen_total"></app-matricula-total>
-            </ng-template>
-         </modal>
-
-      </div>
-   </div>
+<!-- LOGO UTA -->
+<div style="height:0; width:0; overflow:hidden;">
+   <img id="logo-uta" src="../../../assets/img/logo_uta_80.jpg" width="80" height="auto">
+   <canvas id="logo_uta_canvas"></canvas>
 </div>
--->
-<!-- <a role="button" style="cursor: pointer" class="pdf" (click)="func()"></a> -->
-<!-- <a role="button" (click)="func()">DDDDD</a> -->

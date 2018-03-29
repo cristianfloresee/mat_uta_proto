@@ -5,8 +5,7 @@ import * as _ from 'lodash';
 export class FormateadorService {
 
    toPorcentaje(value) {
-      if (value % 1 == 0) return parseInt(value)
-      else return value.toFixed(2)
+      return parseInt(value)
    }
 
    calcPorcentaje(matriculados, vacantes) {
@@ -34,7 +33,7 @@ export class FormateadorService {
                   })
                   .values()
                   .unshift({
-                     SEDE: 'TOTAL',
+                     SEDE: 'TODAS',
                      TIPOS_CARRERA: this.formatTipoCarrera(value_anio, type)
                   })
                   .value()
@@ -52,7 +51,7 @@ export class FormateadorService {
          .map((value_anio, key_anio) => {
 
             let suma_total = {
-               TIPO_CARRERA: 'TOTAL',
+               TIPO_CARRERA: 'TODAS',
                ANTIGUOS: _.sumBy(value_anio, 'ANTIGUOS'),
                INGRESO_ESPECIAL: _.sumBy(value_anio, 'INGRESO_ESPECIAL'),
                OTROS_INGRESOS: _.sumBy(value_anio, 'OTROS_INGRESOS'),
@@ -74,7 +73,7 @@ export class FormateadorService {
                                  OTROS_INGRESOS: _.sumBy(value_sede, 'OTROS_INGRESOS'),
                                  REGULAR: _.sumBy(value_sede, 'REGULAR'),
                                  ANTIGUOS: _.sumBy(value_sede, 'ANTIGUOS'),
-                                 TIPO_CARRERA: 'TOTAL',
+                                 TIPO_CARRERA: 'TODAS',
                               })
                               .map(sede => {
                                  let nuevos = (sede['REGULAR'] + sede['INGRESO_ESPECIAL'] + sede['OTROS_INGRESOS'])
@@ -85,7 +84,7 @@ export class FormateadorService {
                   })
                   .values()
                   .unshift({
-                     SEDE: 'TOTAL',
+                     SEDE: 'TODAS',
                      TIPOS_CARRERA:
                         _(value_anio)
                            .groupBy('TIPO_CARRERA')
@@ -131,7 +130,7 @@ export class FormateadorService {
          })
          .values()
          .unshift({
-            TIPO_CARRERA: 'TOTAL',
+            TIPO_CARRERA: 'TODAS',
             FACULTADES: this.formatFacultad(value, type),
             TOTAL: t_total
          })
@@ -171,43 +170,16 @@ export class FormateadorService {
             }
          }).value()
    }
-   /*
-   sumaNuevos(value_facultad) {
-      let subtotal = {
-         SELECCIONADOS: _.sumBy(value_facultad, 'SELECCIONADOS'),
-         LISTA_ESPERA: _.sumBy(value_facultad, 'LISTA_ESPERA'),
-         REPOSTULACION: _.sumBy(value_facultad, 'REPOSTULACION'),
-         INGRESO_ESPECIAL: _.sumBy(value_facultad, 'INGRESO_ESPECIAL'),
-         VACANTES: _.sumBy(value_facultad, 'VACANTES'),
-         OTROS_INGRESOS: _.sumBy(value_facultad, 'OTROS_INGRESOS'),
-      }
-      subtotal['MATRICULADOS'] = subtotal['SELECCIONADOS'] + subtotal['INGRESO_ESPECIAL'];
-      subtotal['MAT_PORCENTAJE'] = this.calcPorcentaje(subtotal['MATRICULADOS'], subtotal['VACANTES']);
-      subtotal['MAT_TOTAL'] = subtotal['MATRICULADOS'] + subtotal['OTROS_INGRESOS'];
-      return subtotal
-   }
 
-   sumaAntiguos(value_facultad) {
-      return {
-         ANTIGUOS: _.sumBy(value_facultad, 'ANTIGUOS'),
-         ESPERADOS: _.sumBy(value_facultad, 'ESPERADOS')
-      }
-   }
 
-   sumaTotal(value_facultad) {
-      return {
-         INGRESO_ADMISION: _.sumBy(value_facultad, 'INGRESO_ADMISION'),
-         OTROS_INGRESOS: _.sumBy(value_facultad, 'OTROS_INGRESOS'),
-         TOTAL_NUEVOS: _.sumBy(value_facultad, 'TOTAL_NUEVOS'),
-         ANTIGUOS: _.sumBy(value_facultad, 'ANTIGUOS'),
-         TOTAL: _.sumBy(value_facultad, 'TOTAL'),
-      }
-   }
-   */
-
-   suma(value, type) {
+   /**
+    * Suma el Total o Subtotal
+    * @param value 
+    * @param type 
+    */
+   suma(value, type: number) {
       if (type === 1) {
-         let subtotal = {
+         let resultado = {
             SELECCIONADOS: _.sumBy(value, 'SELECCIONADOS'),
             LISTA_ESPERA: _.sumBy(value, 'LISTA_ESPERA'),
             REPOSTULACION: _.sumBy(value, 'REPOSTULACION'),
@@ -215,10 +187,10 @@ export class FormateadorService {
             VACANTES: _.sumBy(value, 'VACANTES'),
             OTROS_INGRESOS: _.sumBy(value, 'OTROS_INGRESOS'),
          }
-         subtotal['MATRICULADOS'] = subtotal['SELECCIONADOS'] + subtotal['INGRESO_ESPECIAL'];
-         subtotal['MAT_PORCENTAJE'] = this.calcPorcentaje(subtotal['MATRICULADOS'], subtotal['VACANTES']);
-         subtotal['MAT_TOTAL'] = subtotal['MATRICULADOS'] + subtotal['OTROS_INGRESOS'];
-         return subtotal
+         resultado['MATRICULADOS'] = resultado['SELECCIONADOS'] + resultado['INGRESO_ESPECIAL'];
+         resultado['MAT_PORCENTAJE'] = this.calcPorcentaje(resultado['MATRICULADOS'], resultado['VACANTES']);
+         resultado['MAT_TOTAL'] = resultado['MATRICULADOS'] + resultado['OTROS_INGRESOS'];
+         return resultado;
       }
       else if (type === 2) {
          return {

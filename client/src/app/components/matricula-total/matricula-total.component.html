@@ -10,16 +10,16 @@
          <tbody>
             <tr>
                <th style="width: 12%;">AÑO</th>
-               <td style="width: 38%;">2017</td>
+               <td style="width: 38%;">{{selected.ANIO}}</td>
                <th style="width: 10%;">SEDE</th>
                <td colspan="2" style="width: 40%;">
-                  ARICA
+                  {{selected.SEDE}}
                </td>
             </tr>
             <tr>
                <th>TIPO DE CARRERA</th>
                <td colspan="3">
-                  PREGRADO
+                  {{selected.TIPO_CARRERA}}
                </td>
                <td style="width: 3%; text-align: center">
                   <a role="button" class="icon-only pdf"></a>
@@ -45,114 +45,41 @@
             </tr>
          </thead>
          <tbody>
-            <tr class="nohover">
-               <th colspan="11" class="fullrow">FACULTAD DE CIENCIAS</th>
-            </tr>
-            <tr>
-               <td style="width: 3%">1</td>
-               <td class="string" style="width: 39%;">
-                  PEDAGOGIA EN EDUCACION BASICA
-               </td>
-               <td>43</td>
-               <td>65</td>
-               <td>25</td>
-               <td style="width: 11%;">34</td>
-               <td style="width: 11%;">15</td>
-            </tr>
-            <tr>
-               <td style="width: 3%;">1</td>
-               <td class="string" style="width: 39%;">
-                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
-               </td>
-               <td>43</td>
-               <td>65</td>
-               <td>25</td>
-               <td style="width: 11%;">34</td>
-               <td style="width: 11%;">15</td>
-            </tr>
-            <tr>
-               <td style="width: 3%;">1</td>
-               <td class="string" style="width: 39%;">
-                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
-               </td>
-               <td>43</td>
-               <td>65</td>
-               <td>25</td>
-               <td style="width: 11%;">34</td>
-               <td style="width: 11%;">15</td>
-            </tr>
-            <tr>
-               <td style="width: 3%;">1</td>
-               <td class="string" style="width: 39%;">
-                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
-               </td>
-               <td>43</td>
-               <td>65</td>
-               <td>25</td>
-               <td style="width: 11%;">34</td>
-               <td style="width: 11%;">15</td>
-            </tr>
-            <tr>
-               <td style="width: 3%;">1</td>
-               <td class="string" style="width: 39%;">
-                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
-               </td>
-               <td>43</td>
-               <td>65</td>
-               <td>25</td>
-               <td style="width: 11%;">34</td>
-               <td style="width: 11%;">15</td>
-            </tr>
-            <tr>
-               <td style="width: 3%;">1</td>
-               <td class="string" style="width: 39%;">
-                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
-               </td>
-               <td>43</td>
-               <td>65</td>
-               <td>25</td>
-               <td style="width: 11%;">34</td>
-               <td style="width: 11%;">15</td>
-            </tr>
-            <tr>
-               <td style="width: 3%;">1</td>
-               <td class="string" style="width: 39%;">
-                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
-               </td>
-               <td>43</td>
-               <td>65</td>
-               <td>25</td>
-               <td style="width: 11%;">34</td>
-               <td style="width: 11%;">15</td>
-            </tr>
-            <tr>
-               <td style="width: 3%;">1</td>
-               <td class="string" style="width: 39%;">
-                  TECNOLOGIA MEDICA CON MENCION EN LABORATORIO CLINICO, HEMATOLOGIA Y BANCO DE SANGRE
-               </td>
-               <td>43</td>
-               <td>65</td>
-               <td>25</td>
-               <td style="width: 11%;">34</td>
-               <td style="width: 11%;">15</td>
-            </tr>
-            <tr class="subtotal">
-               <th style="width: 42%" class="numerico">SUBTOTAL</th>
-               <th style="width: auto;">1608</th>
-               <th style="width: auto;">2035</th>
-               <th style="width: auto">127%</th>
-               <th style="width: 11%;">100</th>
-               <th style="width: 11%;">2135</th>
-            </tr>
+            <ng-container *ngFor="let facultad of total['FACULTADES']; let i= index">
+               <tr class="nohover">
+                  <th colspan="11" class="fullrow">{{facultad.FACULTAD}}</th>
+               </tr>
+
+               <tr *ngFor="let carrera of facultad['CARRERAS']; let j = index">
+                  <td style="width: 3%">{{ cumulativeLength(i) + (j+1) }} </td>
+                  <td class="string" style="width: 39%;">
+                     {{carrera.CARRERA}}
+                  </td>
+                  <td>{{carrera.INGRESO_ADMISION}}</td>
+                  <td>{{carrera.OTROS_INGRESOS}}</td>
+                  <td>{{carrera.TOTAL_NUEVOS}}</td>
+                  <td style="width: 11%;">{{carrera.ANTIGUOS}}</td>
+                  <td style="width: 11%;">{{carrera.TOTAL}}</td>
+               </tr>
+
+               <tr class="subtotal">
+                  <th style="width: 42%" class="numerico">SUBTOTAL</th>
+                  <th style="width: auto;">{{facultad['SUBTOTAL'].INGRESO_ADMISION}}</th>
+                  <th style="width: auto;">{{facultad['SUBTOTAL'].OTROS_INGRESOS}}</th>
+                  <th style="width: auto">{{facultad['SUBTOTAL'].TOTAL_NUEVOS}}</th>
+                  <th style="width: 11%;">{{facultad['SUBTOTAL'].ANTIGUOS}}</th>
+                  <th style="width: 11%;">{{facultad['SUBTOTAL'].TOTAL}}</th>
+               </tr>
+            </ng-container>
          </tbody>
          <tfoot>
             <tr>
                <th style="width: 42%;" class="numerico">TOTAL</th>
-               <th style="width: auto;">1608</th>
-               <th style="width: auto;">2035</th>
-               <th style="width: auto">127%</th>
-               <th style="width: 11%;">100</th>
-               <th style="width: 11%;">2135</th>
+               <th style="width: auto;">{{total['TOTAL'].INGRESO_ADMISION}}</th>
+               <th style="width: auto;">{{total['TOTAL'].OTROS_INGRESOS}}</th>
+               <th style="width: auto">{{total['TOTAL'].TOTAL_NUEVOS}}</th>
+               <th style="width: 11%;">{{total['TOTAL'].ANTIGUOS}}</th>
+               <th style="width: 11%;">{{total['TOTAL'].TOTAL}}</th>
             </tr>
          </tfoot>
       </table>

@@ -22,7 +22,7 @@
 
 .cuerpoTabla.scroll tbody {
     display: block;
-    height: 200px;
+    height: 300px;
     overflow-y: scroll;
     width: 100%;
 }
@@ -740,6 +740,10 @@ table.cuerpoTabla thead th {
 table.cuerpoTabla tfoot th,
 table.cuerpoTabla tbody th {
     padding: 2px 10px 0;
+}
+
+.mypadd{
+   padding: 2px 10px 0;
 }
 
 

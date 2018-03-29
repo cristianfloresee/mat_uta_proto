@@ -25,6 +25,7 @@
                   <a role="button" class="icon-only pdf"></a>
                </td>
             </tr>
+         </tbody>
       </table>
    </div>
 
@@ -40,36 +41,36 @@
          </thead>
          <tbody>
             <!--  -->
-            <div style="all: none" *ngFor="let facultad of antiguos['FACULTADES']">
+            <ng-container *ngFor="let facultad of antiguos['FACULTADES']; let i=index">
                <tr class="nohover">
                   <th colspan="11" class="fullrow">{{facultad.FACULTAD}}</th>
                </tr>
-               <tr *ngFor="let carrera of facultad['CARRERAS']">
-                     <td style="width: 2%">1</td>
-                     <td class="string" style="width: 28%;">
-                           {{carrera.CARRERA}}
-                     </td>
-                     <td style="width: 9%;"> {{carrera.ANTIGUOS}}</td>
-                     <td style="width: 6%;"> {{carrera.ESPERADOS}}</td>
-                  
-               </tr>
-            </div>
+               <tr *ngFor="let carrera of facultad['CARRERAS']; let j=index">
+                  <td style="width: 2%">{{ cumulativeLength(i) + (j+1) }} </td>
+                  <td class="string" style="width: 28%;">
+                     {{carrera.CARRERA}}
+                  </td>
+                  <td style="width: 9%;"> {{carrera.ANTIGUOS}}</td>
+                  <td style="width: 6%;"> {{carrera.ESPERADOS}}</td>
 
+               </tr>
+               <tr class="subtotal">
+                  <th style="width: 30.085%" class="numerico">SUBTOTAL</th>
+                  <th style="width: 9%">{{facultad['SUBTOTAL'].ANTIGUOS}}</th>
+                  <th style="width: 6%;">{{facultad['SUBTOTAL'].ESPERADOS}}</th>
+               </tr>
+            </ng-container>
             <!--
-            <tr class="subtotal">
-               <th style="width: 30.085%" class="numerico">SUBTOTAL</th>
-               <th style="width: 9%">1437</th>
-               <th style="width: 6%;">99</th>
-            </tr>-->
+           -->
          </tbody>
-         <!--
+
          <tfoot>
             <tr>
                <th style="width: 30.085%;" class="numerico">TOTAL</th>
-               <th style="width: 9%">1437</th>
-               <th style="width: 6%;">99</th>
+               <th style="width: 9%">{{antiguos['TOTAL'].ANTIGUOS}}</th>
+               <th style="width: 6%;">{{antiguos['TOTAL'].ESPERADOS}}</th>
             </tr>
-         </tfoot>-->
+         </tfoot>
       </table>
 
    </div>
