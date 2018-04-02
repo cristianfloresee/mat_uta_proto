@@ -53,7 +53,7 @@
                <tr class="nohover">
                   <th colspan="11" class="fullrow">{{facultad.FACULTAD}}</th>
                </tr>
-               <tr *ngFor="let carrera of facultad['CARRERAS']; let j = index">
+               <tr *ngFor="let carrera of facultad['CARRERAS']; let j = index" [ngClass]="change_data['FACULTADES'][i]['CARRERAS'][j]">
                   <td style="width: 2%">{{ cumulativeLength(i) + (j+1) }} </td>
                   <td class="string" style="width: 28%;">
                      {{carrera.CARRERA}}
@@ -76,7 +76,7 @@
                   <td style="width: 6%;">{{carrera.OTROS_INGRESOS}}</td>
                   <td style="width: 7%;">{{carrera.MAT_TOTAL}}</td>
                </tr>
-               <tr class="subtotal">
+               <tr class="subtotal" [ngClass]="change_data['FACULTADES'][i]['SUBTOTAL']">
                   <th style="width: 30.085%" class="numerico">SUBTOTAL</th>
                   <th style="width: 9%">{{facultad['SUBTOTAL'].SELECCIONADOS}}</th>
                   <th style="width: 6%;">{{facultad['SUBTOTAL'].LISTA_ESPERA}}</th>
@@ -98,7 +98,7 @@
 
          </tbody>
          <tfoot>
-            <tr>
+            <tr [ngClass]="this.change_data['TOTAL']">
                <th style="width: 30.085%" class="numerico">TOTAL</th>
                <th style="width: 9%">{{nuevos['TOTAL'].SELECCIONADOS}}</th>
                <th style="width: 6%;">{{nuevos['TOTAL'].LISTA_ESPERA}}</th>

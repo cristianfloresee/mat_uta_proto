@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PdfService } from '../../services/pdf.service';
+import * as _ from 'lodash';
 
 @Component({
    selector: 'app-matricula-nuevos',
@@ -11,10 +12,46 @@ export class MatriculaNuevosComponent implements OnInit {
    @Input() selected: any;
    @Input() canvas_url: any;
 
-   background_style;
+   after_init;
+   change_data;
+   
    constructor(private pdfService: PdfService) { }
 
-   ngOnInit() { }
+   ngOnInit() { 
+      this.initChangeObject();
+
+      setTimeout(() => {
+         this.after_init = true;
+      }, 1000)
+   }
+
+   ngOnChanges(changes) {
+      if (this.after_init) {
+
+
+         for (let i = 0; i < changes.nuevos['currentValue']['FACULTADES'].length; i++) {
+            let facultades_iguales = _.isEqual(changes.nuevos['currentValue']['FACULTADES'][i], changes.nuevos['previousValue']['FACULTADES'][i]);
+            if (!facultades_iguales) {
+
+               for (let j = 0; j < changes.nuevos['currentValue']['FACULTADES'][i]['CARRERAS'].length; j++) {
+                  let carreras_iguales = _.isEqual(changes.nuevos['currentValue']['FACULTADES'][i]['CARRERAS'][j], changes.nuevos['previousValue']['FACULTADES'][i]['CARRERAS'][j]);
+
+                  if (!carreras_iguales) {
+                     this.change_data['FACULTADES'][i]['CARRERAS'][j] = 'cambio';
+                  }
+               }
+
+               this.change_data['FACULTADES'][i]['SUBTOTAL'] = 'cambio';
+               console.log("facultades distintas: ", changes.nuevos['currentValue']['FACULTADES'][i]);
+               this.change_data['TOTAL'] = 'cambio';
+            }
+         }
+
+         setTimeout(() => {
+            this.initChangeObject();
+         }, 3000)
+      }
+   }
 
    cumulativeLength(index) {
       let acc = 0;
@@ -33,6 +70,26 @@ export class MatriculaNuevosComponent implements OnInit {
 
    pdfNuevos() {
       this.pdfService.generarNuevos(this.nuevos, this.selected, this.canvas_url);
+   }
+
+   initChangeObject() {
+
+      this.change_data = {
+         FACULTADES: [],
+         TOTAL: null
+      };
+      for (let i = 0; i < this.nuevos['FACULTADES'].length; i++) {
+
+
+         let carreras = new Array(this.nuevos['FACULTADES'][i]['CARRERAS'].length)
+
+         this.change_data['FACULTADES'].push(
+            {
+               CARRERAS: carreras,
+               SUBTOTAL: null
+            }
+         );
+      }
    }
 
 

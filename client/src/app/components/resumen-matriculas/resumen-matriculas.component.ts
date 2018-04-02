@@ -7,6 +7,7 @@ import { PdfService } from '../../services/pdf.service';
 
 //PLUGIN CHART.JS
 import 'chart.piecelabel.js';
+import { setTimeout } from 'timers';
 
 @Component({
    selector: 'app-resumen-matriculas',
@@ -75,35 +76,34 @@ export class ResumenMatriculasComponent implements OnInit, AfterViewChecked {
 
    ngOnInit() {
       this.initIoConnection(); //INICIO EL SOCKET
+      setTimeout(() => {
+         this.genCanvas();
+         this.canvas_url = this.getCanvasURL();
+      }, 500);
    }
 
-
-   //SE EJECUTA MULTIPLES VECES
-   ngAfterViewChecked() {
-      this.genCanvas();
-      this.canvas_url = this.getCanvasURL();
-   }
-
-   changeValue() {
+   changeValue(init?) {
       let new_data = this.resumen_matriculas[this.anio_selected].SEDES[this.sede_selected].TIPOS_CARRERA[this.tipo_carrera_selected];
-      console.log(new_data);
-      if (new_data['REGULAR'] != this.data_selected['REGULAR']) {
-         console.log("cambio estilo");
-         this.change_data['TOTAL_MATRICULA'] = 'cambio';
-      }
-      else if (new_data['INGRESO_ESPECIAL'] != this.data_selected['INGRESO_ESPECIAL']){
 
-      }
-      else if (new_data['OTROS_INGRESOS'] != this.data_selected['OTROS_INGRESOS']){
+      if (!init) {
+         if (new_data['REGULAR'] != this.data_selected['REGULAR']) this.change_data['REGULAR'] = 'cambio'
+         if (new_data['INGRESO_ESPECIAL'] != this.data_selected['INGRESO_ESPECIAL']) this.change_data['INGRESO_ESPECIAL'] = 'cambio'
+         if (new_data['OTROS_INGRESOS'] != this.data_selected['OTROS_INGRESOS']) this.change_data['OTROS_INGRESOS'] = 'cambio'
+         if (new_data['ANTIGUOS'] != this.data_selected['ANTIGUOS']) this.change_data['ANTIGUOS'] = 'cambio'
+         if (new_data['TOTAL_NUEVOS'] != this.data_selected['TOTAL_NUEVOS']) this.change_data['TOTAL_NUEVOS'] = 'cambio'
 
+         this.change_data['TOTAL_MATRICULA'] = 'cambio'; //SIEMPRE CAMBIA
+
+         setTimeout(() => {
+            this.change_data['REGULAR'] = '';
+            this.change_data['INGRESO_ESPECIAL'] = '';
+            this.change_data['OTROS_INGRESOS'] = '';
+            this.change_data['ANTIGUOS'] = '';
+            this.change_data['TOTAL_NUEVOS'] = '';
+            this.change_data['TOTAL_MATRICULA'] = '';
+         }, 3000)
       }
-      else if(new_data['TOTAL_MATRICULA'] != this.data_selected['TOTAL_MATRICULA']){
-         this.change_data['TOTAL_MATRICULA'] = 'cambio';
-      }
-      else{
-         console.log("cambio estilo");
-         this.change_data['TOTAL_MATRICULA'] = 'cambio';
-      }
+
 
       this.data_selected = new_data;
       this.pieChartData = [
@@ -143,7 +143,7 @@ export class ResumenMatriculasComponent implements OnInit, AfterViewChecked {
 
             this.resumen_matriculas = this._formateador.resumenMatriculas(data[0]);
             this.ready_resumen = true;
-            this.changeValue();
+            this.changeValue(1);
             this.ready_chart = true;
 
             this.resumen_nuevos = this._formateador.resumen(data[1], 1);
@@ -207,5 +207,5 @@ export class ResumenMatriculasComponent implements OnInit, AfterViewChecked {
    pdfResumen() {
       this.pdfService.generarResumen(this.data_selected, this.obj_selected, this.canvas_url);
    }
-  
+
 }

@@ -4,7 +4,7 @@ height:100%;
 display: flex;
 align-items: center;
 top: 0;" *ngIf="!loading">
-   <img style="display: flex; margin: 0 auto;" src="../../../assets/img/cargando.gif">
+   <img style="display: flex; margin: 0 auto;" src="./assets/img/cargando.gif">
 </div>
 
 
@@ -79,27 +79,27 @@ top: 0;" *ngIf="!loading">
 
                </th>
             </tr>
-            <tr>
-               <td>1</td>
+            <tr [ngClass]="change_data.REGULAR">
+               <td >1</td>
                <td class="string">INGRESO REGULAR</td>
                <td>{{data_selected.REGULAR}}</td>
                <td>&#160;</td>
             </tr>
-            <tr>
-               <td>2</td>
+            <tr [ngClass]="change_data.INGRESO_ESPECIAL">
+               <td >2</td>
                <td class="string">INGRESO ESPECIAL</td>
                <td>{{data_selected.INGRESO_ESPECIAL}}</td>
                <td>&#160;</td>
             </tr>
-            <tr>
+            <tr [ngClass]="change_data.OTROS_INGRESOS">
                <td>3</td>
                <td class="string">OTROS INGRESOS</td>
                <td>{{data_selected.OTROS_INGRESOS}}</td>
                <td>&#160;</td>
             </tr>
-            <tr class="subtotal">
-               <td colspan="2" class="bold right mypadd">TOTAL ALUMNOS NUEVOS</td>
-               <td colspan="1">{{data_selected.TOTAL_NUEVOS}}</td>
+            <tr [ngClass]="change_data.TOTAL_NUEVOS" class="subtotal">
+               <td  colspan="2" class="bold right mypadd">TOTAL ALUMNOS NUEVOS</td>
+               <td colspan="1"> {{data_selected.TOTAL_NUEVOS}}</td>
                <td>
                </td>
             </tr>
@@ -111,17 +111,17 @@ top: 0;" *ngIf="!loading">
                   <a role="button" style="cursor: pointer" class="abrirArea" (click)="openAntiguos()"></a>
                </th>
             </tr>
-            <tr class="subtotal">
+            <tr [ngClass]="change_data.ANTIGUOS"  class="subtotal">
                <td colspan="2" class="bold right mypadd">TOTAL ALUMNOS ANTIGUOS</td>
                <td colspan="1">{{data_selected.ANTIGUOS}}</td>
                <td></td>
             </tr>
-            <tr>
-               <th [ngClass]="change_data.TOTAL_MATRICULA" colspan="2" style="text-align:left;">
+            <tr [ngClass]="change_data.TOTAL_MATRICULA">
+               <th colspan="2" style="text-align:left;">
                   MATRICULA TOTAL
                </th>
-               <th [ngClass]="change_data.TOTAL_MATRICULA" colspan="1">{{data_selected.TOTAL_MATRICULA}}</th>
-               <th [ngClass]="change_data.TOTAL_MATRICULA">
+               <th  colspan="1">{{data_selected.TOTAL_MATRICULA}}</th>
+               <th>
                   <a role="button" style="cursor: pointer" class="abrirArea" (click)="openTotal()"></a>
                </th>
             </tr>
@@ -153,13 +153,13 @@ top: 0;" *ngIf="!loading">
 <modal #totalModal>
    <ng-template #modalBody>
       <app-matricula-total [total]="resumen_total[anio_selected].SEDES[sede_selected].TIPOS_CARRERA[tipo_carrera_selected]" [selected]="obj_selected"
-      [canvas_url]="canvas_url"></app-matricula-total>
+         [canvas_url]="canvas_url"></app-matricula-total>
    </ng-template>
 </modal>
 
 
 <!-- LOGO UTA -->
 <div style="height:0; width:0; overflow:hidden;">
-   <img id="logo-uta" src="../../../assets/img/logo_uta_80.jpg" width="80" height="auto">
+   <img id="logo-uta" src="./assets/img/logo_uta_80.jpg" width="80" height="auto">
    <canvas id="logo_uta_canvas"></canvas>
 </div>
