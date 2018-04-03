@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 //SOCKET.IO
 import * as io from 'socket.io-client';
-const SERVER_URL = 'http://146.83.108.235:3000';
+const SERVER_URL = 'https://146.83.108.235:3002';
 
 @Injectable()
 export class SocketService {

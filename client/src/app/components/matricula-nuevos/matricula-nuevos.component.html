@@ -56,7 +56,7 @@
                <tr *ngFor="let carrera of facultad['CARRERAS']; let j = index" [ngClass]="change_data['FACULTADES'][i]['CARRERAS'][j]">
                   <td style="width: 2%">{{ cumulativeLength(i) + (j+1) }} </td>
                   <td class="string" style="width: 28%;">
-                     {{carrera.CARRERA}}
+                     {{carrera.CC}} - {{carrera.CARRERA}}
                   </td>
                   <td style="width: 9%;">{{carrera.SELECCIONADOS}}</td>
                   <td style="width: 6%;">{{carrera.LISTA_ESPERA}}</td>

@@ -148,7 +148,8 @@ export class FormateadorService {
             if ((type === 2) || (type === 3)) {
                return {
                   FACULTAD: key_facultad,
-                  CARRERAS: value_facultad,
+                  CARRERAS: _(value_facultad).orderBy('CC', 'asc')
+                  .value(),
                   SUBTOTAL: subtotal
                }
             }
@@ -164,7 +165,9 @@ export class FormateadorService {
                         }
                         adicional['MAT_PORCENTAJE'] = this.calcPorcentaje(adicional['MATRICULADOS'], facultad['VACANTES'])
                         return _.extend({}, facultad, adicional)
-                     }).value(),
+                     }).values()
+                     .orderBy('CC', 'asc')
+                     .value(),
                   SUBTOTAL: subtotal
                }
             }
