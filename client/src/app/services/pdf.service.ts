@@ -436,7 +436,7 @@ export class PdfService {
       //ITERAR FACULTADES
       data['FACULTADES'].forEach((element) => {
 
-         console.log('NOMBRE FAC: ', element.FACULTAD);
+         //console.log('NOMBRE FAC: ', element.FACULTAD);
          nombre_facultad = element.FACULTAD;
 
          col_1 = { text: nombre_facultad, style: ['tam_10', 'bold', 'bg_celeste'], colSpan: 11 };
@@ -459,7 +459,7 @@ export class PdfService {
          // iterar carreras
          element.CARRERAS.forEach((ele) => {
 
-            console.log(i);
+            /* console.log(i);
             console.log('CARRERA: ', ele.CC + ' - ' + ele.CARRERA);
             console.log('SELECCIONADOS: ', ele.SELECCIONADOS);
             console.log('LISTA ESPERA: ', ele.LISTA_ESPERA);
@@ -469,7 +469,7 @@ export class PdfService {
             console.log('MATRICULADOS: ', ele.MATRICULADOS);
             console.log('%: ', ele.MAT_PORCENTAJE);
             console.log('OTROS INGRESOS: ', ele.OTROS_INGRESOS);
-            console.log('MATRICULA TOTAL: ', ele.MAT_TOTAL);
+            console.log('MATRICULA TOTAL: ', ele.MAT_TOTAL); */
 
 
             numero = i;
@@ -581,7 +581,7 @@ export class PdfService {
          });
 
          // SUBTOTAL de cada facultad
-         console.log('ST SELECCIONADOS: ', element.SUBTOTAL.SELECCIONADOS);
+         /* console.log('ST SELECCIONADOS: ', element.SUBTOTAL.SELECCIONADOS);
          console.log('ST LISTA ESPERA: ', element.SUBTOTAL.LISTA_ESPERA);
          console.log('ST REPOSTULACION: ', element.SUBTOTAL.REPOSTULACION);
          console.log('ST INGRESO ESPECIAL: ', element.SUBTOTAL.INGRESO_ESPECIAL);
@@ -589,7 +589,7 @@ export class PdfService {
          console.log('ST MATRICULADOS: ', element.SUBTOTAL.MATRICULADOS);
          console.log('ST %: ', element.SUBTOTAL.MAT_PORCENTAJE);
          console.log('ST OTROS INGRESOS: ', element.SUBTOTAL.OTROS_INGRESOS);
-         console.log('ST MATRICULA TOTAL: ', element.SUBTOTAL.MAT_TOTAL);
+         console.log('ST MATRICULA TOTAL: ', element.SUBTOTAL.MAT_TOTAL); */
 
          st_seleccionados = element.SUBTOTAL.SELECCIONADOS;
          st_lista_espera = element.SUBTOTAL.LISTA_ESPERA;

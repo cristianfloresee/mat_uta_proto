@@ -42,7 +42,6 @@ export class MatriculaNuevosComponent implements OnInit {
                }
 
                this.change_data['FACULTADES'][i]['SUBTOTAL'] = 'cambio';
-               console.log("facultades distintas: ", changes.nuevos['currentValue']['FACULTADES'][i]);
                this.change_data['TOTAL'] = 'cambio';
             }
          }

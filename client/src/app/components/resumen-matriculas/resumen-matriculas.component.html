@@ -20,7 +20,7 @@ top: 0;" *ngIf="!loading">
             <tr>
                <th colspan="2" style="width: 10%;">AÑO</th>
                <td colspan="2">
-                  <select style="width: 12%" [(ngModel)]="anio_selected" (change)="changeValue()">
+                  <select style="width: 12%" [(ngModel)]="anio_selected" (change)="changeValue(1)">
                      <option *ngFor="let res of resumen_matriculas; let i=index" [ngValue]="i">{{ res.ANIO }}</option>
                   </select>
                </td>
@@ -28,7 +28,7 @@ top: 0;" *ngIf="!loading">
             <tr>
                <th colspan="2" style="width: 10%;">SEDE</th>
                <td colspan="2">
-                  <select style="width: 12%" [(ngModel)]="sede_selected" (change)="changeValue()">
+                  <select style="width: 12%" [(ngModel)]="sede_selected" (change)="changeValue(1)">
                      <option *ngFor="let sede of resumen_matriculas[anio_selected].SEDES; let j=index" [ngValue]="j">{{ sede.SEDE }}</option>
                   </select>
                </td>
@@ -36,7 +36,7 @@ top: 0;" *ngIf="!loading">
             <tr>
                <th colspan="2" style="width: 10%;">TIPO CARRERA</th>
                <td colspan="1">
-                  <select style="width: 12.5%" [(ngModel)]="tipo_carrera_selected" (change)="changeValue()">
+                  <select style="width: 12.5%" [(ngModel)]="tipo_carrera_selected" (change)="changeValue(1)">
                      <option *ngFor="let tipo_carrera of resumen_matriculas[anio_selected].SEDES[sede_selected].TIPOS_CARRERA; let k=index" [ngValue]="k">{{ tipo_carrera.TIPO_CARRERA }}</option>
                   </select>
                </td>

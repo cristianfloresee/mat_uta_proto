@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ViewChild, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, OnInit } from '@angular/core';
 import { ModalComponent } from '../../modal/modal.component';
 import { SocketService } from '../../services/socket.service';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
@@ -7,15 +7,13 @@ import { PdfService } from '../../services/pdf.service';
 
 //PLUGIN CHART.JS
 import 'chart.piecelabel.js';
-import { setTimeout } from 'timers';
-
 @Component({
    selector: 'app-resumen-matriculas',
    templateUrl: './resumen-matriculas.component.html',
    styleUrls: ['./resumen-matriculas.component.css'],
    encapsulation: ViewEncapsulation.None,
 })
-export class ResumenMatriculasComponent implements OnInit, AfterViewChecked {
+export class ResumenMatriculasComponent implements OnInit {
    @ViewChild('nuevosModal') nuevosModal: ModalComponent;
    @ViewChild('antiguosModal') antiguosModal: ModalComponent;
    @ViewChild('totalModal') totalModal: ModalComponent;
@@ -26,7 +24,6 @@ export class ResumenMatriculasComponent implements OnInit, AfterViewChecked {
    resumen_nuevos;
    resumen_antiguos;
    resumen_total;
-
 
    pieChartLegend: boolean = true;
    pieChartLabels: string[];

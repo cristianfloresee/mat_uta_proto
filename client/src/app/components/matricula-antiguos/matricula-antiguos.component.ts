@@ -56,7 +56,6 @@ export class MatriculaAntiguosComponent implements OnInit, OnChanges {
                }
 
                this.change_data['FACULTADES'][i]['SUBTOTAL'] = 'cambio';
-               console.log("facultades distintas: ", changes.antiguos['currentValue']['FACULTADES'][i]);
                this.change_data['TOTAL'] = 'cambio';
             }
          }
@@ -75,6 +74,7 @@ export class MatriculaAntiguosComponent implements OnInit, OnChanges {
          FACULTADES: [],
          TOTAL: null
       };
+
       for (let i = 0; i < this.antiguos['FACULTADES'].length; i++) {
 
 

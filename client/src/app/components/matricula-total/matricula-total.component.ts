@@ -16,10 +16,7 @@ export class MatriculaTotalComponent implements OnInit, OnChanges {
    constructor(private pdfService: PdfService) { }
 
    ngOnInit() {
-
-      console.log("total: ", this.total);
       this.initChangeObject();
-
       setTimeout(() => {
          this.after_init = true;
       }, 1000)
